@@ -1,6 +1,5 @@
 # solution_challenge_project
 
-A new Flutter application.
 
 ## Getting Started
 
