@@ -1,6 +1,6 @@
 # solution_challenge_project
 
-application.
+
 
 ## Getting Started
 
