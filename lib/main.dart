@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'file:///D:/Flutter_app/challenge_solution_project/lib/Screens/auth_screens/auth_screen.dart';
+import 'Screens/auth_screens/auth_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -9,7 +9,20 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: AuthScreen(),
+      theme: ThemeData(
+        primaryColor: Colors.blue,
+        scaffoldBackgroundColor: Colors.blue,
+        primarySwatch: Colors.blue,
+        accentColor: Colors.blueAccent,
+        buttonTheme: ButtonTheme.of(context).copyWith(
+          buttonColor: Colors.blue,
+          textTheme: ButtonTextTheme.primary,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+        ),
+      ),
+      home: AuthScreen()
     );
   }
 }
