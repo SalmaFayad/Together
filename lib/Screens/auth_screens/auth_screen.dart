@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:solution_challenge_project/Widgets_auth/Auth_form.dart';
+import 'package:solution_challenge_project/Widgets/auth_widgets/Auth_form.dart';
 class AuthScreen extends StatefulWidget {
   @override
   _AuthScreenState createState() => _AuthScreenState();
