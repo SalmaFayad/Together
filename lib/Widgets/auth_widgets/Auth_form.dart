@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
 class AuthForm extends StatefulWidget {
+  final void Function(String email, String password, String username,
+      bool isLogin, BuildContext ctx) submitFn;
+  AuthForm(this.submitFn);
   @override
   _AuthFormState createState() => _AuthFormState();
 }
@@ -16,9 +19,9 @@ class _AuthFormState extends State<AuthForm> {
     FocusScope.of(context).unfocus();
     if(isValid){
       _formkey.currentState.save();
-      print(_email);
-      print(_username);
-      print(_password);
+      widget.submitFn(
+        _email.trim() ,_password.trim(),_username.trim(),_islogin,context
+      );
     }
   }
   @override
@@ -51,7 +54,7 @@ class _AuthFormState extends State<AuthForm> {
                   key: ValueKey('username'),
                   validator: (val){
                     if(val.isEmpty || val.length<6)
-                      return "Please enter al least 6 characters";
+                      return "Please enter at least 6 characters";
                     return null;
                   },
                   onSaved: (val) => _username=val,
@@ -60,11 +63,6 @@ class _AuthFormState extends State<AuthForm> {
                 ///for password
                 TextFormField(
                   key: ValueKey('password'),
-                  validator: (val){
-                    if(val.isEmpty || val.length<8)
-                      return "Password must be al least 8 characters";
-                    return null;
-                  },
                   onSaved: (val)=> _password=val,
                   decoration: InputDecoration(labelText: "Password"),
                   obscureText: true,

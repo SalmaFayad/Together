@@ -5,6 +5,7 @@ import 'package:solution_challenge_project/Widgets/auth_widgets/Auth_form.dart';
 class AuthScreen extends StatefulWidget {
   @override
   _AuthScreenState createState() => _AuthScreenState();
+
 }
 
 class _AuthScreenState extends State<AuthScreen> {
@@ -27,16 +28,20 @@ class _AuthScreenState extends State<AuthScreen> {
         );
       }
     } on FirebaseAuthException catch (e) {
+      String message ='Error occurred';
       if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
+        message='The password provided is too weak.';
       } else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
+        message='The account already exists for that email.';
       }
       else if (e.code == 'user-not-found') {
-        print('No user found for that email.');
+        message='No user found for that email.';
       } else if (e.code == 'wrong-password') {
-        print('Wrong password provided for that user.');
+        message='Wrong password provided for that user.';
       }
+      Scaffold.of(ctx).showSnackBar(SnackBar(
+        content: Text(message),
+        backgroundColor: Theme.of(ctx).errorColor,));
     } catch (e) {
       print(e);
     }
@@ -45,7 +50,7 @@ class _AuthScreenState extends State<AuthScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: AuthForm(),
+      body: AuthForm(_submitAuthForm),
     );
   }
 }
