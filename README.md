@@ -1,6 +1,6 @@
 # solution_challenge_project
 
-testing
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
