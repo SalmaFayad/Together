@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+
 import 'package:solution_challenge_project/Widgets/auth_widgets/Auth_form.dart';
 
 class AuthScreen extends StatefulWidget {
@@ -11,6 +12,7 @@ class AuthScreen extends StatefulWidget {
 
 class _AuthScreenState extends State<AuthScreen> {
   final _auth = FirebaseAuth.instance;
+
   bool _isLoading =false;
   void _submitAuthForm(String email, String password, String username,
       bool isLogin, BuildContext ctx) async {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthForm extends StatefulWidget {
   final void Function(String email, String password, String username,
@@ -16,6 +17,8 @@ class _AuthFormState extends State<AuthForm> {
   String _email = '';
   String _password = '';
   String _username = '';
+
+  get googleSignIn => null;
   void _submit() {
     final isValid = _formKey.currentState.validate();
     FocusScope.of(context).unfocus();
@@ -23,6 +26,15 @@ class _AuthFormState extends State<AuthForm> {
       _formKey.currentState.save();
       widget.submitFn(
           _email.trim(), _password.trim(), _username.trim(), _isLogin, context);
+    }
+  }
+  void handleSignIn()async{
+    final GoogleSignIn googleSignIn =GoogleSignIn();
+    try{
+      await googleSignIn.signIn();
+      print('signed in');
+    }catch(e){
+      print(e);
     }
   }
 
@@ -81,6 +93,11 @@ class _AuthFormState extends State<AuthForm> {
                   child: Text(_isLogin ? 'Login' : 'Sign Up'),
                   onPressed: _submit,
                 ),
+                if(!widget._isLoading)
+                  ElevatedButton(
+                    child: Text('sign in with google'),
+                    onPressed: handleSignIn,
+                  ),
                 if(!widget._isLoading)
                 TextButton(
                   child: Text(_isLogin
