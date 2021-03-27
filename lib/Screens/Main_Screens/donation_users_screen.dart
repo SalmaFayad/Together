@@ -8,16 +8,21 @@ class donationUsersScreen extends StatefulWidget {
 class _donationUsersScreenState extends State<donationUsersScreen> {
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+
+    double sizeTopConatainer = size.height / 7;
+    double sizeTopLeftContainer = size.width / 1.5;
     return Scaffold(
       body: Column(
         children: [
           Row(
             children: [
-              Container(
-                height: 150,
-                width: 480,
-                padding: const EdgeInsets.all(10),
-                child: Card(
+              Card(
+                elevation: 3,
+                child: Container(
+                  height: sizeTopConatainer,
+                  width: sizeTopLeftContainer,
+                  padding: const EdgeInsets.all(10),
                   child: Row(
                     children: [
                       CircleAvatar(
@@ -35,6 +40,28 @@ class _donationUsersScreenState extends State<donationUsersScreen> {
                   ),
                 ),
               ),
+              Card(
+                  elevation: 3,
+                  child: Container(
+                    height: sizeTopConatainer,
+                    width: sizeTopLeftContainer - 8.5,
+                    padding: const EdgeInsets.all(20),
+                    child: Column(
+                      children: [
+                        Text('Change Location'),
+                        new DropdownButton<String>(
+                          items: <String>['Ismailia', 'Cairo', 'Giza']
+                              .map((String value) {
+                            return new DropdownMenuItem<String>(
+                              value: value,
+                              child: new Text(value),
+                            );
+                          }).toList(),
+                          onChanged: (_) {},
+                        ),
+                      ],
+                    ),
+                  )),
             ],
           ),
           Container(

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:solution_challenge_project/Screens/drawerScreen.dart';
 
-import 'data_page_screen.dart';
-import 'delivery_users_screen.dart';
-import 'donation_users_screen.dart';
-import 'donation_users_screen.dart';
+import 'Main_Screens/data_page_screen.dart';
+import 'Main_Screens/delivery_users_screen.dart';
+import 'Main_Screens/donation_users_screen.dart';
+import 'Main_Screens/donation_users_screen.dart';
 
 class mainPages extends StatefulWidget {
   @override
@@ -33,12 +34,21 @@ class _mainPagesState extends State<mainPages> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(_selectedIndex == 0
+            ? 'Data'
+            : _selectedIndex == 1
+                ? 'Donors'
+                : _selectedIndex == 2
+                    ? 'Delivery'
+                    : ''),
+      ),
       body: PageView(
         // to swep between screens
         controller: _pageController,
         children: _screen,
         onPageChanged: _onPageChanged,
-        // physics: NeverScrollableScrollPhysics(),
+        physics: NeverScrollableScrollPhysics(),
       ),
       bottomNavigationBar: BottomNavigationBar(
         onTap: _onItemTapped,
@@ -55,7 +65,7 @@ class _mainPagesState extends State<mainPages> {
               Icons.person,
               color: _selectedIndex == 1 ? Colors.blue : null,
             ),
-            label: 'User',
+            label: 'Donors',
           ),
           BottomNavigationBarItem(
             icon: Icon(
@@ -67,6 +77,7 @@ class _mainPagesState extends State<mainPages> {
         ],
       ),
       backgroundColor: Colors.white,
+      drawer: Drawer(child: drawerScreen()),
     );
   }
 }
