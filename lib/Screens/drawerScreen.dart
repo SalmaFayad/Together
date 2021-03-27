@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class drawerScreen extends StatefulWidget {
@@ -64,7 +65,9 @@ class _drawerScreenState extends State<drawerScreen> {
         title: Text("Edit Profile"),
       ),
       ListTile(
-        onTap: () {},
+        onTap: () {
+          FirebaseAuth.instance.signOut();
+        },
         leading: Icon(
           Icons.logout,
           color: Colors.black,

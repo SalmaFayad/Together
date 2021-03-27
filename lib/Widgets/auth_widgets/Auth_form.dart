@@ -77,12 +77,12 @@ class _AuthFormState extends State<AuthForm> {
                 if(widget._isLoading)
                   CircularProgressIndicator(),
                 if(!widget._isLoading)
-                RaisedButton(
+                ElevatedButton(
                   child: Text(_isLogin ? 'Login' : 'Sign Up'),
                   onPressed: _submit,
                 ),
                 if(!widget._isLoading)
-                FlatButton(
+                TextButton(
                   child: Text(_isLogin
                       ? "Create New account"
                       : "i already have an account"),
