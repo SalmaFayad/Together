@@ -78,7 +78,9 @@ class _drawerScreenState extends State<drawerScreen> {
         title: Text("Edit Profile"),
       ),
       ListTile(
-        onTap: () {},
+        onTap: () {
+          FirebaseAuth.instance.signOut();
+        },
         leading: Icon(
           Icons.logout,
           color: Colors.black,
