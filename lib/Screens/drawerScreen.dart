@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class drawerScreen extends StatefulWidget {
@@ -6,6 +8,8 @@ class drawerScreen extends StatefulWidget {
 }
 
 class _drawerScreenState extends State<drawerScreen> {
+  CollectionReference users = FirebaseFirestore.instance.collection('users');
+  final String documentId = FirebaseAuth.instance.currentUser.uid;
   @override
   Widget build(BuildContext context) {
     return Column(children: [
@@ -23,12 +27,22 @@ class _drawerScreenState extends State<drawerScreen> {
               SizedBox(
                 height: 5.0,
               ),
-              Text(
-                "UserName",
-                style: TextStyle(
-                  fontSize: 22.0,
-                  fontWeight: FontWeight.w800,
-                ),
+              FutureBuilder<DocumentSnapshot>(
+                future: users.doc(documentId).get(),
+                builder: (BuildContext context,
+                    AsyncSnapshot<DocumentSnapshot> snapshot) {
+                  if (snapshot.hasError) {
+                    return Text("Something went wrong");
+                  }
+
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    Map<String, dynamic> data = snapshot.data.data();
+                    return Text(
+                        "${data['username']}");
+                  }
+
+                  return Text("loading");
+                },
               ),
             ],
           ),
