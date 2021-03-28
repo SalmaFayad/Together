@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:solution_challenge_project/models/user.dart';
 
 class AuthForm extends StatefulWidget {
-  final void Function(String email, String password, String username,
-      bool isLogin, BuildContext ctx) submitFn;
+  final void Function(
+          UserAccount user, String password, bool isLogin, BuildContext ctx)
+      submitFn;
   final bool _isLoading;
   AuthForm(this.submitFn, this._isLoading);
   @override
@@ -17,14 +19,21 @@ class _AuthFormState extends State<AuthForm> {
   String _email = '';
   String _password = '';
   String _username = '';
+  UserAccount user;
 
   void _submit() {
     final isValid = _formKey.currentState.validate();
     FocusScope.of(context).unfocus();
     if (isValid) {
+      user = UserAccount(
+        email: _email,
+        name: _username,
+        city: 'Dummy city',
+        country: 'Dummy country',
+        phone: 'Dummy phone',
+      );
       _formKey.currentState.save();
-      widget.submitFn(
-          _email.trim(), _password.trim(), _username.trim(), _isLogin, context);
+      widget.submitFn(user, _password.trim(), _isLogin, context);
     }
   }
 

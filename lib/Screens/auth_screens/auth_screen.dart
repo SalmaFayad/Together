@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import 'package:solution_challenge_project/Widgets/auth_widgets/Auth_form.dart';
+import 'package:solution_challenge_project/models/user.dart';
 
 class AuthScreen extends StatefulWidget {
   @override
@@ -13,8 +14,8 @@ class _AuthScreenState extends State<AuthScreen> {
   final _auth = FirebaseAuth.instance;
 
   bool _isLoading = false;
-  void _submitAuthForm(String email, String password, String username,
-      bool isLogin, BuildContext ctx) async {
+  void _submitAuthForm(
+      UserAccount user, String password, bool isLogin, BuildContext ctx) async {
     UserCredential authResult;
     try {
       setState(() {
@@ -23,23 +24,19 @@ class _AuthScreenState extends State<AuthScreen> {
       if (isLogin) {
         ///login
         authResult = await _auth.signInWithEmailAndPassword(
-          email: email,
+          email: user.email,
           password: password,
         );
       } else {
         ///sign up
         authResult = await _auth.createUserWithEmailAndPassword(
-          email: email,
+          email: user.email,
           password: password,
         );
         await FirebaseFirestore.instance
             .collection('users')
             .doc(authResult.user.uid)
-            .set({
-          'username': username,
-
-          /// [todo] add country, phoneNumber, and city.
-        });
+            .set(user.toMap());
       }
     } on FirebaseAuthException catch (e) {
       String message = 'Error occurred';
