@@ -6,7 +6,7 @@ class AuthForm extends StatefulWidget {
   final void Function(String email, String password, String username,
       bool isLogin, BuildContext ctx) submitFn;
   final bool _isLoading;
-  AuthForm(this.submitFn ,this._isLoading);
+  AuthForm(this.submitFn, this._isLoading);
   @override
   _AuthFormState createState() => _AuthFormState();
 }
@@ -18,7 +18,6 @@ class _AuthFormState extends State<AuthForm> {
   String _password = '';
   String _username = '';
 
-  get googleSignIn => null;
   void _submit() {
     final isValid = _formKey.currentState.validate();
     FocusScope.of(context).unfocus();
@@ -28,12 +27,16 @@ class _AuthFormState extends State<AuthForm> {
           _email.trim(), _password.trim(), _username.trim(), _isLogin, context);
     }
   }
-  void handleSignIn()async{
-    final GoogleSignIn googleSignIn =GoogleSignIn();
-    try{
+
+  void handleSignIn() async {
+    final GoogleSignIn googleSignIn = GoogleSignIn();
+    try {
+      /// [Important] add your sha1 fingerprint to firebase before building the apk.
       await googleSignIn.signIn();
       print('signed in');
-    }catch(e){
+      print(googleSignIn.currentUser.email);
+      print(googleSignIn.currentUser.displayName);
+    } catch (e) {
       print(e);
     }
   }
@@ -86,29 +89,28 @@ class _AuthFormState extends State<AuthForm> {
                 SizedBox(
                   height: 12,
                 ),
-                if(widget._isLoading)
-                  CircularProgressIndicator(),
-                if(!widget._isLoading)
-                ElevatedButton(
-                  child: Text(_isLogin ? 'Login' : 'Sign Up'),
-                  onPressed: _submit,
-                ),
-                if(!widget._isLoading)
+                if (widget._isLoading) CircularProgressIndicator(),
+                if (!widget._isLoading)
+                  ElevatedButton(
+                    child: Text(_isLogin ? 'Login' : 'Sign Up'),
+                    onPressed: _submit,
+                  ),
+                if (!widget._isLoading)
                   ElevatedButton(
                     child: Text('sign in with google'),
                     onPressed: handleSignIn,
                   ),
-                if(!widget._isLoading)
-                TextButton(
-                  child: Text(_isLogin
-                      ? "Create New account"
-                      : "i already have an account"),
-                  onPressed: () {
-                    setState(() {
-                      _isLogin = !_isLogin;
-                    });
-                  },
-                ),
+                if (!widget._isLoading)
+                  TextButton(
+                    child: Text(_isLogin
+                        ? "Create New account"
+                        : "i already have an account"),
+                    onPressed: () {
+                      setState(() {
+                        _isLogin = !_isLogin;
+                      });
+                    },
+                  ),
               ],
             ),
           ),
