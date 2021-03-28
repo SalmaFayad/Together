@@ -13,6 +13,7 @@ class mainPages extends StatefulWidget {
 
 class _mainPagesState extends State<mainPages> {
   PageController _pageController = PageController();
+  var height = AppBar().preferredSize.height;
 
   List<Widget> _screen = [
     dataPageScreen(),
@@ -56,21 +57,21 @@ class _mainPagesState extends State<mainPages> {
           BottomNavigationBarItem(
             icon: Icon(
               Icons.data_usage,
-              color: _selectedIndex == 0 ? Colors.blue : null,
+              color: _selectedIndex == 0 ? Colors.blue : Colors.black,
             ),
             label: 'Date',
           ),
           BottomNavigationBarItem(
             icon: Icon(
               Icons.person,
-              color: _selectedIndex == 1 ? Colors.blue : null,
+              color: _selectedIndex == 1 ? Colors.blue : Colors.black,
             ),
             label: 'Donors',
           ),
           BottomNavigationBarItem(
             icon: Icon(
               Icons.delivery_dining,
-              color: _selectedIndex == 2 ? Colors.blue : null,
+              color: _selectedIndex == 2 ? Colors.blue : Colors.black,
             ),
             label: 'Delivery',
           ),

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
 class dataPageScreen extends StatefulWidget {
+  /*var height;
+  dataPageScreen(this.height);*/
+
   @override
   _dataPageScreenState createState() => _dataPageScreenState();
 }
