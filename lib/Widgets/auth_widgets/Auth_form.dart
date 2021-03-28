@@ -19,6 +19,9 @@ class _AuthFormState extends State<AuthForm> {
   String _email = '';
   String _password = '';
   String _username = '';
+  String _city='';
+  String _country='';
+  String _phoneNumber;
   UserAccount user;
 
   void _submit() {
@@ -28,9 +31,9 @@ class _AuthFormState extends State<AuthForm> {
       user = UserAccount(
         email: _email,
         name: _username,
-        city: 'Dummy city',
-        country: 'Dummy country',
-        phone: 'Dummy phone',
+        city: _city,
+        country: _country,
+        phone: _phoneNumber,
       );
       _formKey.currentState.save();
       widget.submitFn(user, _password.trim(), _isLogin, context);
@@ -88,7 +91,45 @@ class _AuthFormState extends State<AuthForm> {
                     onSaved: (val) => _username = val,
                     decoration: InputDecoration(labelText: "Username"),
                   ),
-
+              if(!_isLogin)
+                ///for city
+                TextFormField(
+                  key: ValueKey('city'),
+                  validator: (val) {
+                    if (val.isEmpty)
+                      return 'Please Enter a your City!';
+                    return null;
+                  },
+                  onSaved: (val) => _city = val,
+                  keyboardType: TextInputType.text,
+                  decoration: InputDecoration(labelText: "City"),
+                ),
+                if(!_isLogin)
+                ///for country
+                  TextFormField(
+                    key: ValueKey('country'),
+                    validator: (val) {
+                      if (val.isEmpty)
+                        return 'Please Enter a your Country!';
+                      return null;
+                    },
+                    onSaved: (val) => _country = val,
+                    keyboardType: TextInputType.text,
+                    decoration: InputDecoration(labelText: "Country"),
+                  ),
+                if(!_isLogin)
+                ///for phone number
+                  TextFormField(
+                    key: ValueKey('phone'),
+                    validator: (val) {
+                      if (val.isEmpty)
+                        return 'Please Enter a your Phone Number!';
+                      return null;
+                    },
+                    onSaved: (val) => _phoneNumber = val,
+                    keyboardType: TextInputType.phone,
+                    decoration: InputDecoration(labelText: "Phone Number"),
+                  ),
                 ///for password
                 TextFormField(
                   key: ValueKey('password'),
