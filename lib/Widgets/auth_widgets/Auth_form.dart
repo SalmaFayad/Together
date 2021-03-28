@@ -32,6 +32,7 @@ class _AuthFormState extends State<AuthForm> {
     final GoogleSignIn googleSignIn = GoogleSignIn();
     try {
       /// [Important] add your sha1 fingerprint to firebase before building the apk.
+      /// [sha1 command] keytool -list -v -keystore ~/.android/debug.keystore -alias androiddebugkey -storepass android -keypass android
       await googleSignIn.signIn();
       print('signed in');
       print(googleSignIn.currentUser.email);
