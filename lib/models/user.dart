@@ -12,4 +12,12 @@ class UserAccount {
     this.country,
     this.phone,
   });
+
+  dynamic toMap() => {
+        'username': name,
+        'email': email,
+        'city': city,
+        'phone': phone,
+        'country': country,
+      };
 }
