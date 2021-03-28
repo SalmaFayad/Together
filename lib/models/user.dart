@@ -1,11 +1,11 @@
-class User {
+class UserAccount {
   String name;
   String email;
   String city;
   String phone;
   String country;
 
-  User({
+  UserAccount({
     this.name,
     this.email,
     this.city,
