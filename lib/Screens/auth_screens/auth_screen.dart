@@ -37,7 +37,8 @@ class _AuthScreenState extends State<AuthScreen> {
             .doc(authResult.user.uid)
             .set({
           'username': username,
-          'password': password,
+
+          /// [todo] add country, phoneNumber, and city.
         });
       }
     } on FirebaseAuthException catch (e) {
