@@ -75,7 +75,7 @@ class _deliveryUserScreenState extends State<deliveryUserScreen> {
           Expanded(
             child: Container(
               child: ListView.builder(
-                itemCount: 10,
+                itemCount: 115,
                 itemBuilder: (context, index) {
                   return GestureDetector(
                     onTap: () {
@@ -85,19 +85,12 @@ class _deliveryUserScreenState extends State<deliveryUserScreen> {
                         elevation: 3,
                         child: Container(
                           // padding: const EdgeInsets.all(20),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: CircleAvatar(
-                                  radius: 25.0,
-                                  backgroundColor: Colors.black,
-                                ),
+                          child: ListTile(
+                              leading: CircleAvatar(
+                                radius: 25.0,
+                                backgroundColor: Colors.black,
                               ),
-                              Text('UserName'),
-                            ],
-                          ),
+                              title: Text('UserName')),
                         )),
                   );
                 },
