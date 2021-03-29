@@ -21,13 +21,15 @@ class _AuthFormState extends State<AuthForm> {
   String _username = '';
   String _city='';
   String _country='';
-  String _phoneNumber;
+  String _phoneNumber='';
   UserAccount user;
+
 
   void _submit() {
     final isValid = _formKey.currentState.validate();
     FocusScope.of(context).unfocus();
     if (isValid) {
+      _formKey.currentState.save();
       user = UserAccount(
         email: _email,
         name: _username,
@@ -35,7 +37,6 @@ class _AuthFormState extends State<AuthForm> {
         country: _country,
         phone: _phoneNumber,
       );
-      _formKey.currentState.save();
       widget.submitFn(user, _password.trim(), _isLogin, context);
     }
   }
