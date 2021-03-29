@@ -24,6 +24,7 @@ class _drawerScreenState extends State<drawerScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               CircleAvatar(
+                backgroundImage: AssetImage('assets/images/photo.jpeg'),
                 radius: 50.0,
                 backgroundColor: Colors.purple, // must be Image
               ),
