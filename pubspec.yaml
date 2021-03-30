@@ -29,3 +29,7 @@ flutter:
 
   uses-material-design: true
 
+  # Add your assets here
+  assets:
+    - assets/
+    - assets/images/
