@@ -42,7 +42,8 @@ class _mainPagesState extends State<mainPages> {
                 ? 'Donors'
                 : _selectedIndex == 2
                     ? 'Delivery'
-                    : ''),
+                    : ''
+        ),
       ),
       body: PageView(
         // to swep between screens
@@ -57,21 +58,21 @@ class _mainPagesState extends State<mainPages> {
           BottomNavigationBarItem(
             icon: Icon(
               Icons.data_usage,
-              color: _selectedIndex == 0 ? Colors.blue : Colors.black,
+              color: _selectedIndex == 0 ? Color(0xFF757575) : Colors.black,
             ),
-            label: 'Date',
+            label: 'Data',
           ),
           BottomNavigationBarItem(
             icon: Icon(
               Icons.person,
-              color: _selectedIndex == 1 ? Colors.blue : Colors.black,
+              color: _selectedIndex == 1 ? Color(0xFF757575) : Colors.black,
             ),
             label: 'Donors',
           ),
           BottomNavigationBarItem(
             icon: Icon(
               Icons.delivery_dining,
-              color: _selectedIndex == 2 ? Colors.blue : Colors.black,
+              color: _selectedIndex == 2 ? Color(0xFF757575) : Colors.black,
             ),
             label: 'Delivery',
           ),

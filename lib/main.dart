@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'Screens/auth_screens/auth_screen.dart';
 import 'Screens/main_pages.dart';
-import 'connect_screen_class.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,12 +17,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        primaryColor: Colors.blue,
-        scaffoldBackgroundColor: Colors.blue,
-        primarySwatch: Colors.blue,
-        accentColor: Colors.blueAccent,
+        primaryColor: Color(0xFFFBC02D),
+        accentColor: Color(0xFF9E9E9E),
         buttonTheme: ButtonTheme.of(context).copyWith(
-          buttonColor: Colors.blue,
+          buttonColor: Colors.grey[700],
           textTheme: ButtonTextTheme.primary,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
