@@ -33,3 +33,16 @@ flutter:
   assets:
     - assets/
     - assets/images/
+
+  ## un-comment this section to add your custom font.
+  # fonts:
+  #   - family: FONT_NAME
+  #     fonts:
+  #       - asset: FONT_LOCATION
+  #       - asset: FONT_LOCATION
+  #         style: italic
+  #   - family: ANOTHER_FONT
+  #     fonts:
+  #       - asset: FONT_LOCATION.ttf
+  #       - asset: FONT_LOCATION.ttf
+  #         weight: 700
