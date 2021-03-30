@@ -53,6 +53,7 @@ class _mainPagesState extends State<mainPages> {
         physics: NeverScrollableScrollPhysics(),
       ),
       bottomNavigationBar: BottomNavigationBar(
+        fixedColor: Colors.black,
         onTap: _onItemTapped,
         items: [
           BottomNavigationBarItem(
@@ -69,6 +70,7 @@ class _mainPagesState extends State<mainPages> {
             ),
             label: 'Donors',
           ),
+
           BottomNavigationBarItem(
             icon: Icon(
               Icons.delivery_dining,

@@ -28,7 +28,7 @@ class _deliveryUserScreenState extends State<deliveryUserScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           CircleAvatar(
-                            backgroundColor: Colors.black,
+                            backgroundImage: AssetImage('assets/images/photo.jpeg'),
                             radius: 32,
                           ),
                           Column(
@@ -75,7 +75,7 @@ class _deliveryUserScreenState extends State<deliveryUserScreen> {
           Expanded(
             child: Container(
               child: ListView.builder(
-                itemCount: 10,
+                itemCount: 3,
                 itemBuilder: (context, index) {
                   return GestureDetector(
                     onTap: () {
@@ -85,32 +85,25 @@ class _deliveryUserScreenState extends State<deliveryUserScreen> {
                         elevation: 3,
                         child: Container(
                           // padding: const EdgeInsets.all(20),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: CircleAvatar(
-                                  radius: 25.0,
-                                  backgroundColor: Colors.black,
-                                ),
+                          child: ListTile(
+                              leading: CircleAvatar(
+                                radius: 25.0,
+                                backgroundImage: AssetImage('assets/images/photo.jpeg')
                               ),
-                              Text('UserName'),
-                            ],
-                          ),
+                              title: Text('UserName')),
                         )),
                   );
                 },
               ),
             ),
           ),
-          FloatingActionButton(
-            onPressed: () {},
-            child: const Icon(Icons.clean_hands),
-          ),
         ],
       ),
       backgroundColor: Colors.white,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: const Icon(Icons.compare_arrows_sharp),
+      ),
     );
   }
 }

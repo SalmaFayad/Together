@@ -24,6 +24,7 @@ class _drawerScreenState extends State<drawerScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               CircleAvatar(
+                backgroundImage: AssetImage('assets/images/photo.jpeg'),
                 radius: 50.0,
                 backgroundColor: Colors.purple, // must be Image
               ),
@@ -74,6 +75,10 @@ class _drawerScreenState extends State<drawerScreen> {
       ),
       ListTile(
         onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => ProfilePage()),
+          );
         },
         leading: Icon(
           Icons.edit,
