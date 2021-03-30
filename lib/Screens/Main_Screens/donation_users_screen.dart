@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/material.dart';
+import 'package:solution_challenge_project/models/databaseManager.dart';
 
 class donationUsersScreen extends StatefulWidget {
   @override
@@ -8,24 +10,67 @@ class donationUsersScreen extends StatefulWidget {
 }
 
 class _donationUsersScreenState extends State<donationUsersScreen> {
-
   CollectionReference users = FirebaseFirestore.instance.collection('users');
   final String documentId = FirebaseAuth.instance.currentUser.uid;
   Map<String, dynamic> data;
 
-
-  List <Map<String, String>>userData = [
-    {'username': "Amr" , 'image': "assets/images/photo.jpeg"},
-    {'username': "Ayman" , 'image': "assets/images/photo.jpeg"},
-    {'username': "Ahmed" , 'image': "assets/images/photo.jpeg"},
+  List<Map<String, String>> userData = [
+    {'username': "Amr", 'image': "assets/images/photo.jpeg"},
+    {'username': "Ayman", 'image': "assets/images/photo.jpeg"},
+    {'username': "Ahmed", 'image': "assets/images/photo.jpeg"},
   ];
 
   String statue = "User Out";
   bool isIn = false;
-  void userIn(){
+  void userIn() {
     statue = "User In";
     isIn = true;
   }
+
+  String valueChoose;
+  List<String> cityList = [
+    'Cairo',
+    'Alexandria',
+    'Giza',
+    'Qalyubia'
+        'Port Said',
+    'Suez',
+    'Gharbia',
+    'Luxor',
+    'Dakahlia',
+    'Gharbia',
+    'Asyut',
+    'Ismailia',
+    'Faiyum',
+    'Sharqia',
+    'Damietta',
+    'Aswan',
+    'Minya',
+    'Beheira',
+    'Beni Suef',
+    'Red Sea',
+    'Qena',
+    'Sohag',
+    '	Monufia',
+    'North Sinai'
+  ];
+/*  List country = [];
+  @override
+  void initState() {
+    super.initState();
+    fetchDatabase();
+  }
+
+  fetchDatabase() async {
+    dynamic res = await DatabaseManager.getUserCountry();
+    if (res == null)
+      print('No one in this counrty');
+    else {
+      setState(() {
+        res = country;
+      });
+    }
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +94,8 @@ class _donationUsersScreenState extends State<donationUsersScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           CircleAvatar(
-                            backgroundImage: AssetImage('assets/images/photo.jpeg'),
+                            backgroundImage:
+                                AssetImage('assets/images/photo.jpeg'),
                             radius: 32,
                           ),
                           Column(
@@ -63,10 +109,10 @@ class _donationUsersScreenState extends State<donationUsersScreen> {
                                     return Text("Something went wrong");
                                   }
 
-                                  if (snapshot.connectionState == ConnectionState.done) {
-                                     data = snapshot.data.data();
-                                    return Text(
-                                        "${data['username']}");
+                                  if (snapshot.connectionState ==
+                                      ConnectionState.done) {
+                                    data = snapshot.data.data();
+                                    return Text("${data['username']}");
                                   }
                                   return Text("loading");
                                 },
@@ -91,16 +137,20 @@ class _donationUsersScreenState extends State<donationUsersScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             Text('Change Location'),
-                            new DropdownButton<String>(
-                              items: <String>['Ismailia', 'Cairo', 'Giza']
-                                  .map((String value) {
-                                return new DropdownMenuItem<String>(
-                                  value: value,
-                                  child: new Text(value),
-                                );
-                              }).toList(),
-                              onChanged: (_) {},
-                            ),
+                            DropdownButton(
+                                hint: Text('Select City'),
+                                value: valueChoose,
+                                onChanged: (newValue) {
+                                  setState(() {
+                                    valueChoose = newValue;
+                                  });
+                                },
+                                items: cityList.map((valueItem) {
+                                  return DropdownMenuItem(
+                                    value: valueItem,
+                                    child: Text(valueItem),
+                                  );
+                                }).toList()),
                           ],
                         ),
                       )),
@@ -124,8 +174,8 @@ class _donationUsersScreenState extends State<donationUsersScreen> {
                           child: ListTile(
                               leading: CircleAvatar(
                                   radius: 25.0,
-                                  backgroundImage: AssetImage(userData[index]['image'])
-                              ),
+                                  backgroundImage:
+                                      AssetImage(userData[index]['image'])),
                               title: Text(userData[index]['username'])),
                         )),
                   );
@@ -139,14 +189,13 @@ class _donationUsersScreenState extends State<donationUsersScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           setState(() {
-            if(!isIn){
+            if (!isIn) {
               userIn();
               userData.add({
                 'username': data['username'],
                 'image': "assets/images/photo.jpeg",
               });
-            }
-            else {
+            } else {
               userData.removeLast();
               isIn = false;
               statue = "User Out";
