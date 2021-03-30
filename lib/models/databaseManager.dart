@@ -21,16 +21,4 @@ class DatabaseManager {
     }
   }
 
-  Future getAllUsers() async{
-    try{
-      await usersAccounts.get().then((querySnapShot) {
-        querySnapShot.docs.forEach((element) {
-
-        });
-      });
-    } catch(e){
-      print(e.toString());
-      return null;
-    }
-  }
 }
