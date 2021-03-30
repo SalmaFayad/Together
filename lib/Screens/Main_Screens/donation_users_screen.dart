@@ -2,7 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
+import 'package:solution_challenge_project/Screens/chat_screens/chat_screen.dart';
 import 'package:solution_challenge_project/models/databaseManager.dart';
+import 'package:solution_challenge_project/models/user.dart';
 
 class donationUsersScreen extends StatefulWidget {
   @override
@@ -11,21 +13,30 @@ class donationUsersScreen extends StatefulWidget {
 
 class _donationUsersScreenState extends State<donationUsersScreen> {
   CollectionReference users = FirebaseFirestore.instance.collection('users');
-  final String documentId = FirebaseAuth.instance.currentUser.uid;
-  Map<String, dynamic> data;
+  final String currentUserId = FirebaseAuth.instance.currentUser.uid;
 
-  List<Map<String, String>> userData = [
-    {'username': "Amr", 'image': "assets/images/photo.jpeg"},
-    {'username': "Ayman", 'image': "assets/images/photo.jpeg"},
-    {'username': "Ahmed", 'image': "assets/images/photo.jpeg"},
-  ];
+  bool isDonor = false;
 
-  String statue = "User Out";
-  bool isIn = false;
-  void userIn() {
-    statue = "User In";
-    isIn = true;
+  Future<void> updateUserStatus() {
+    if(isDonor){
+      isDonor = false;
+      return users
+          .doc(currentUserId)
+          .update({'status': 'away'});
+    }else{
+      isDonor = true;
+      return users
+          .doc(currentUserId)
+          .update({'status': 'donor'});
+    }
   }
+
+  Future<void> updateUserId() async {
+    return users
+        .doc(currentUserId)
+        .update({'id': currentUserId});
+  }
+
 
   String valueChoose;
   List<String> cityList = [
@@ -54,26 +65,10 @@ class _donationUsersScreenState extends State<donationUsersScreen> {
     '	Monufia',
     'North Sinai'
   ];
-/*  List country = [];
-  @override
-  void initState() {
-    super.initState();
-    fetchDatabase();
-  }
-
-  fetchDatabase() async {
-    dynamic res = await DatabaseManager.getUserCountry();
-    if (res == null)
-      print('No one in this counrty');
-    else {
-      setState(() {
-        res = country;
-      });
-    }
-  }*/
 
   @override
   Widget build(BuildContext context) {
+    Map<String, dynamic> data;
     Size size = MediaQuery.of(context).size;
 
     double sizeTopConatainer = size.height / 6;
@@ -102,7 +97,7 @@ class _donationUsersScreenState extends State<donationUsersScreen> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               FutureBuilder<DocumentSnapshot>(
-                                future: users.doc(documentId).get(),
+                                future: users.doc(currentUserId).get(),
                                 builder: (BuildContext context,
                                     AsyncSnapshot<DocumentSnapshot> snapshot) {
                                   if (snapshot.hasError) {
@@ -111,13 +106,12 @@ class _donationUsersScreenState extends State<donationUsersScreen> {
 
                                   if (snapshot.connectionState ==
                                       ConnectionState.done) {
-                                    data = snapshot.data.data();
-                                    return Text("${data['username']}");
+                                    Map<String, dynamic> data = snapshot.data.data();
+                                    return Text("${data['username']}\nstatus: ${data['status']}");
                                   }
                                   return Text("loading");
                                 },
                               ),
-                              Text('statue: $statue'),
                             ],
                           ),
                         ],
@@ -158,30 +152,42 @@ class _donationUsersScreenState extends State<donationUsersScreen> {
               ),
             ],
           ),
-          Expanded(
-            child: Container(
-              child: ListView.builder(
-                itemCount: userData.length,
-                itemBuilder: (context, index) {
-                  return GestureDetector(
-                    onTap: () {
-                      // go to chat
+          StreamBuilder(
+            stream:FirebaseFirestore.instance.collection('users').where('status',isEqualTo: 'donor').snapshots(includeMetadataChanges: true),
+            builder: (ctx,snapShot){
+              if(snapShot.connectionState == ConnectionState.waiting){
+                return CircularProgressIndicator();
+              }
+              final docs = snapShot.data.docs;
+              return Expanded(
+                child: Container(
+                  child: ListView.builder(
+                    itemCount: docs.length,
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                        onTap: () {
+                          updateUserId();
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => ChatScreen(docs[index]['id'])),
+                          );
+                        },
+                        child: Card(
+                            elevation: 3,
+                            child: Container(
+                              // padding: const EdgeInsets.all(20),
+                              child: ListTile(
+                                  leading: CircleAvatar(
+                                      radius: 25.0,
+                                      ),
+                                  title: Text(docs[index]['username'])),
+                            )),
+                      );
                     },
-                    child: Card(
-                        elevation: 3,
-                        child: Container(
-                          // padding: const EdgeInsets.all(20),
-                          child: ListTile(
-                              leading: CircleAvatar(
-                                  radius: 25.0,
-                                  backgroundImage:
-                                      AssetImage(userData[index]['image'])),
-                              title: Text(userData[index]['username'])),
-                        )),
-                  );
-                },
-              ),
-            ),
+                  ),
+                ),
+              );
+            },
           ),
         ],
       ),
@@ -189,17 +195,7 @@ class _donationUsersScreenState extends State<donationUsersScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           setState(() {
-            if (!isIn) {
-              userIn();
-              userData.add({
-                'username': data['username'],
-                'image': "assets/images/photo.jpeg",
-              });
-            } else {
-              userData.removeLast();
-              isIn = false;
-              statue = "User Out";
-            }
+            updateUserStatus();
           });
         },
         child: const Icon(Icons.arrow_upward_sharp),

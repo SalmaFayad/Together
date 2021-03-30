@@ -3,6 +3,9 @@ import 'package:solution_challenge_project/Widgets/chat_widgets/messages.dart';
 import 'package:solution_challenge_project/Widgets/chat_widgets/new_message.dart';
 
 class ChatScreen extends StatelessWidget{
+  final String userId;
+  ChatScreen(this.userId);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,9 +17,9 @@ class ChatScreen extends StatelessWidget{
         child: Column(
           children: [
             Expanded(
-              child: Messages(),
+              child: Messages(userId),
             ),
-            NewMessage(),
+            NewMessage(userId),
           ],
         ),
       ),

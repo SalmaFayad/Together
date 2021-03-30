@@ -12,12 +12,13 @@ dependencies:
   flutter:
     sdk: flutter
 
- 
+
   cupertino_icons: ^1.0.0
   email_validator: ^1.0.6
-  firebase_core: "^0.7.0"
-  firebase_auth: "^0.20.1"
-  cloud_firestore: "^0.16.0+1"
+  firebase_auth: ^1.0.1
+  firebase_core: ^1.0.2
+  cloud_firestore: ^1.0.2
+
   google_sign_in: ^4.5.4
 
 dev_dependencies:
@@ -29,20 +30,7 @@ flutter:
 
   uses-material-design: true
 
-  # Add your assets here
+  # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/
-    - assets/images/
+    - assets/images/photo.jpeg
 
-  ## un-comment this section to add your custom font.
-  # fonts:
-  #   - family: FONT_NAME
-  #     fonts:
-  #       - asset: FONT_LOCATION
-  #       - asset: FONT_LOCATION
-  #         style: italic
-  #   - family: ANOTHER_FONT
-  #     fonts:
-  #       - asset: FONT_LOCATION.ttf
-  #       - asset: FONT_LOCATION.ttf
-  #         weight: 700

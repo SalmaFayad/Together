@@ -4,10 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:solution_challenge_project/Widgets/chat_widgets/message_bubble.dart';
 
 class Messages extends StatelessWidget{
+  final String userId;
+  Messages(this.userId);
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: FirebaseFirestore.instance.collection('chat').orderBy('createdAt',descending: true).snapshots(),
+      stream: FirebaseFirestore.instance.collection('chat').where(
+        'userId' , isEqualTo: userId
+      ).snapshots(),
       builder: (ctx,snapShot){
         if(snapShot.connectionState == ConnectionState.waiting){
           return CircularProgressIndicator();
@@ -20,8 +24,7 @@ class Messages extends StatelessWidget{
           itemBuilder: (ctx,index) => MessageBubble(
             docs[index]['text'],
             docs[index]['username'],
-            docs[index]['userId'] == user.uid,
-            key: ValueKey(docs[index].documentID),
+            docs[index]['myId'] == user.uid,
           )
         );
       },

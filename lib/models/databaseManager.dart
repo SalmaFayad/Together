@@ -4,18 +4,31 @@ import 'package:flutter/material.dart';
 import 'package:solution_challenge_project/models/user.dart';
 
 class DatabaseManager {
-  final CollectionReference UserAccountt =
+  final CollectionReference usersAccounts =
       FirebaseFirestore.instance.collection('users');
 
   Future getUserCountry() async {
     List items = [];
     try {
-      await UserAccountt.get().then((query) {
+      await usersAccounts.get().then((query) {
         query.docs.forEach((element) {
           items.add(element.data);
         });
       });
     } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
+
+  Future getAllUsers() async{
+    try{
+      await usersAccounts.get().then((querySnapShot) {
+        querySnapShot.docs.forEach((element) {
+
+        });
+      });
+    } catch(e){
       print(e.toString());
       return null;
     }

@@ -1,10 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:solution_challenge_project/Screens/drawerScreen.dart';
 
 import 'Main_Screens/data_page_screen.dart';
 import 'Main_Screens/delivery_users_screen.dart';
 import 'Main_Screens/donation_users_screen.dart';
-import 'Main_Screens/donation_users_screen.dart';
+
 
 class mainPages extends StatefulWidget {
   @override
@@ -14,6 +16,10 @@ class mainPages extends StatefulWidget {
 class _mainPagesState extends State<mainPages> {
   PageController _pageController = PageController();
   var height = AppBar().preferredSize.height;
+
+  CollectionReference users = FirebaseFirestore.instance.collection('users');
+  final String currentUserId = FirebaseAuth.instance.currentUser.uid;
+
 
   List<Widget> _screen = [
     dataPageScreen(),

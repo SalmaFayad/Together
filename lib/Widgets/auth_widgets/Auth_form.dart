@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -31,11 +32,13 @@ class _AuthFormState extends State<AuthForm> {
     if (isValid) {
       _formKey.currentState.save();
       user = UserAccount(
+        id: null,
         email: _email,
         name: _username,
         city: _city,
         country: _country,
         phone: _phoneNumber,
+        status: 'away'
       );
       widget.submitFn(user, _password.trim(), _isLogin, context);
     }
@@ -171,4 +174,5 @@ class _AuthFormState extends State<AuthForm> {
       ),
     );
   }
+
 }

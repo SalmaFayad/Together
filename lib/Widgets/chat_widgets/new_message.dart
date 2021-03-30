@@ -3,6 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class NewMessage extends StatefulWidget{
+  final String userId;
+  NewMessage(this.userId);
   @override
   _NewMessageState createState() => _NewMessageState();
 }
@@ -12,7 +14,6 @@ class _NewMessageState extends State<NewMessage> {
   final _controller = TextEditingController();
   String _enteredMessage = "";
 
-
   _sendMessage() async{
     FocusScope.of(context).unfocus();
     final user =  FirebaseAuth.instance.currentUser;
@@ -21,7 +22,8 @@ class _NewMessageState extends State<NewMessage> {
       'text': _enteredMessage,
       'createdAt': Timestamp.now(),
       'username': userData['username'],
-      'userId': user.uid,
+      'myId': user.uid,
+      'userId': widget.userId
     });
     _controller.clear();
   }
