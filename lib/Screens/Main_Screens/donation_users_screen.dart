@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class donationUsersScreen extends StatefulWidget {
@@ -6,6 +8,25 @@ class donationUsersScreen extends StatefulWidget {
 }
 
 class _donationUsersScreenState extends State<donationUsersScreen> {
+
+  CollectionReference users = FirebaseFirestore.instance.collection('users');
+  final String documentId = FirebaseAuth.instance.currentUser.uid;
+  Map<String, dynamic> data;
+
+
+  List <Map<String, String>>userData = [
+    {'username': "Amr" , 'image': "assets/images/photo.jpeg"},
+    {'username': "Ayman" , 'image': "assets/images/photo.jpeg"},
+    {'username': "Ahmed" , 'image': "assets/images/photo.jpeg"},
+  ];
+
+  String statue = "User Out";
+  bool isIn = false;
+  void userIn(){
+    statue = "User In";
+    isIn = true;
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -28,14 +49,29 @@ class _donationUsersScreenState extends State<donationUsersScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           CircleAvatar(
-                            backgroundColor: Colors.black,
+                            backgroundImage: AssetImage('assets/images/photo.jpeg'),
                             radius: 32,
                           ),
                           Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text('UserName'),
-                              Text('statue'),
+                              FutureBuilder<DocumentSnapshot>(
+                                future: users.doc(documentId).get(),
+                                builder: (BuildContext context,
+                                    AsyncSnapshot<DocumentSnapshot> snapshot) {
+                                  if (snapshot.hasError) {
+                                    return Text("Something went wrong");
+                                  }
+
+                                  if (snapshot.connectionState == ConnectionState.done) {
+                                     data = snapshot.data.data();
+                                    return Text(
+                                        "${data['username']}");
+                                  }
+                                  return Text("loading");
+                                },
+                              ),
+                              Text('statue: $statue'),
                             ],
                           ),
                         ],
@@ -75,7 +111,7 @@ class _donationUsersScreenState extends State<donationUsersScreen> {
           Expanded(
             child: Container(
               child: ListView.builder(
-                itemCount: 10,
+                itemCount: userData.length,
                 itemBuilder: (context, index) {
                   return GestureDetector(
                     onTap: () {
@@ -85,32 +121,40 @@ class _donationUsersScreenState extends State<donationUsersScreen> {
                         elevation: 3,
                         child: Container(
                           // padding: const EdgeInsets.all(20),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: CircleAvatar(
+                          child: ListTile(
+                              leading: CircleAvatar(
                                   radius: 25.0,
-                                  backgroundColor: Colors.black,
-                                ),
+                                  backgroundImage: AssetImage(userData[index]['image'])
                               ),
-                              Text('UserName'),
-                            ],
-                          ),
+                              title: Text(userData[index]['username'])),
                         )),
                   );
                 },
               ),
             ),
           ),
-          FloatingActionButton(
-            onPressed: () {},
-            child: const Icon(Icons.clean_hands),
-          ),
         ],
       ),
       backgroundColor: Colors.white,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          setState(() {
+            if(!isIn){
+              userIn();
+              userData.add({
+                'username': data['username'],
+                'image': "assets/images/photo.jpeg",
+              });
+            }
+            else {
+              userData.removeLast();
+              isIn = false;
+              statue = "User Out";
+            }
+          });
+        },
+        child: const Icon(Icons.arrow_upward_sharp),
+      ),
     );
   }
 }

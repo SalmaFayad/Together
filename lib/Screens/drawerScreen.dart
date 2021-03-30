@@ -75,6 +75,10 @@ class _drawerScreenState extends State<drawerScreen> {
       ),
       ListTile(
         onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => ProfilePage()),
+          );
         },
         leading: Icon(
           Icons.edit,
