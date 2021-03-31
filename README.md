@@ -1,5 +1,7 @@
 # Together
 ![logo](lib/Screens/assests/togetherLogo.png)
+
+
 Together it is a platform to help people inneed of food and to create an environment for communication between people and sharing meals with Poor people 
 Our solution is to deliver food to people in need of food by delivery donors, where the delivery donor communicates and compacts with the food donor then takes the food to Poor people under the supervision of charities that are responsible for information about people in need of food. Our goal is to encourage people to help the poor, and create challenges among them to encourage them to continue to donate and deliver.
 
