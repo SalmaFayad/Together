@@ -9,7 +9,7 @@ class connectScreen extends StatefulWidget {
 }
 
 class _connectScreenState extends State<connectScreen> {
-  double XOffset = 0, YOffset = 0, ScaleFactor = 1;
+  double xOffset = 0, yOffset = 0, scaleFactor = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -18,8 +18,11 @@ class _connectScreenState extends State<connectScreen> {
         children: [
           drawerScreen(),
           AnimatedContainer(
-              transform: Matrix4.translationValues(XOffset, YOffset, 0)
-                ..scale(ScaleFactor),
+              duration: null,
+
+              /// [todo] add duration!
+              transform: Matrix4.translationValues(xOffset, yOffset, 0)
+                ..scale(scaleFactor),
               child: MainPages()),
         ],
       ),
