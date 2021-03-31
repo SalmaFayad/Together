@@ -23,11 +23,25 @@ class _drawerScreenState extends State<drawerScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              CircleAvatar(
-                backgroundImage: AssetImage('assets/images/photo.jpeg'),
-                radius: 50.0,
-                backgroundColor: Colors.purple, // must be Image
-              ),
+              FutureBuilder<DocumentSnapshot>(
+                  future: users.doc(documentId).get(),
+                  builder: (BuildContext context,
+                      AsyncSnapshot<DocumentSnapshot> snapshot) {
+                    if (snapshot.hasError) {
+                      return Text("Something went wrong");
+                    }
+
+                    if (snapshot.connectionState == ConnectionState.done) {
+                      Map<String, dynamic> data = snapshot.data.data();
+                      return CircleAvatar(
+                        backgroundImage: NetworkImage(data['imageUrl']),
+                        radius: 50.0,
+                        backgroundColor: Colors.purple, // must be Image
+                      );
+                    }
+                    return Text("loading");
+                  }),
+
               SizedBox(
                 height: 5.0,
               ),
@@ -41,8 +55,7 @@ class _drawerScreenState extends State<drawerScreen> {
 
                   if (snapshot.connectionState == ConnectionState.done) {
                     Map<String, dynamic> data = snapshot.data.data();
-                    return Text(
-                        "${data['username']}");
+                    return Text("${data['username']}");
                   }
 
                   return Text("loading");
