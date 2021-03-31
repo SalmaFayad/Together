@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'Screens/drawerScreen.dart';
 import 'Screens/main_pages.dart';
 
-class connectScreen extends StatefulWidget {
+class ConnectScreen extends StatefulWidget {
   @override
-  _connectScreenState createState() => _connectScreenState();
+  _ConnectScreenState createState() => _ConnectScreenState();
 }
 
-class _connectScreenState extends State<connectScreen> {
-  double XOffset = 0, YOffset = 0, ScaleFactor = 1;
+class _ConnectScreenState extends State<ConnectScreen> {
+  double xOffset = 0, yOffset = 0, scaleFactor = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -18,8 +18,11 @@ class _connectScreenState extends State<connectScreen> {
         children: [
           drawerScreen(),
           AnimatedContainer(
-              transform: Matrix4.translationValues(XOffset, YOffset, 0)
-                ..scale(ScaleFactor),
+
+              /// [todo] add duration!
+              duration: null,
+              transform: Matrix4.translationValues(xOffset, yOffset, 0)
+                ..scale(scaleFactor),
               child: MainPages()),
         ],
       ),

@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -16,31 +15,33 @@ class AuthForm extends StatefulWidget {
 
 class _AuthFormState extends State<AuthForm> {
   final _formKey = GlobalKey<FormState>();
-  bool _isLogin = true;
-  String _email = '';
-  String _password = '';
-  String _username = '';
-  String _city='';
-  String _country='';
-  String _phoneNumber='';
+  bool _isLogin;
+  String _password;
+  String _cpassword;
   UserAccount user;
 
+  @override
+  void initState() {
+    super.initState();
+    user = UserAccount();
+    _password = '';
+    _cpassword = '';
+    _isLogin = true;
+  }
 
   void _submit() {
     final isValid = _formKey.currentState.validate();
     FocusScope.of(context).unfocus();
     if (isValid) {
       _formKey.currentState.save();
-      user = UserAccount(
-        id: null,
-        email: _email,
-        name: _username,
-        city: _city,
-        country: _country,
-        phone: _phoneNumber,
-        imageUrl: null,
-        status: 'away'
-      );
+      if (_password != _cpassword) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('Password doesn\'t match'),
+          backgroundColor: Theme.of(context).errorColor,
+        ));
+        return;
+      }
+      user.status = 'away';
       widget.submitFn(user, _password.trim(), _isLogin, context);
     }
   }
@@ -79,7 +80,7 @@ class _AuthFormState extends State<AuthForm> {
                       return 'Please Enter a valid Email!';
                     return null;
                   },
-                  onSaved: (val) => _email = val,
+                  onSaved: (val) => user.email = val,
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(labelText: "Email Address"),
                 ),
@@ -93,48 +94,54 @@ class _AuthFormState extends State<AuthForm> {
                         return "Please enter at least 6 characters";
                       return null;
                     },
-                    onSaved: (val) => _username = val,
+                    onSaved: (val) => user.name = val,
                     decoration: InputDecoration(labelText: "Username"),
                   ),
-              if(!_isLogin)
-                ///for city
-                TextFormField(
-                  key: ValueKey('city'),
-                  validator: (val) {
-                    if (val.isEmpty)
-                      return 'Please Enter a your City!';
-                    return null;
-                  },
-                  onSaved: (val) => _city = val,
-                  keyboardType: TextInputType.text,
-                  decoration: InputDecoration(labelText: "City"),
-                ),
-                if(!_isLogin)
-                ///for country
+                if (!_isLogin)
+
+                  ///for city
+                  TextFormField(
+                    key: ValueKey('city'),
+                    validator: (val) {
+                      if (val.isEmpty) return 'Please Enter a your City!';
+                      return null;
+                    },
+                    onSaved: (val) => user.city = val,
+                    keyboardType: TextInputType.text,
+                    decoration: InputDecoration(labelText: "City"),
+                  ),
+                if (!_isLogin)
+
+                  ///for country
                   TextFormField(
                     key: ValueKey('country'),
                     validator: (val) {
-                      if (val.isEmpty)
-                        return 'Please Enter a your Country!';
+                      if (val.isEmpty) return 'Please Enter a your Country!';
                       return null;
                     },
-                    onSaved: (val) => _country = val,
+                    onSaved: (val) => user.country = val,
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(labelText: "Country"),
                   ),
-                if(!_isLogin)
-                ///for phone number
+                if (!_isLogin)
+
+                  ///for phone number
                   TextFormField(
                     key: ValueKey('phone'),
                     validator: (val) {
-                      if (val.isEmpty)
-                        return 'Please Enter a your Phone Number!';
+                      String patttern = r'(^(?:[+0]9)?[0-9]{10,12}$)';
+                      RegExp regExp = new RegExp(patttern);
+                      if (val.length == 0)
+                        return 'Please enter mobile number';
+                      else if (!regExp.hasMatch(val))
+                        return 'Please enter valid mobile number';
                       return null;
                     },
-                    onSaved: (val) => _phoneNumber = val,
+                    onSaved: (val) => user.phone = val,
                     keyboardType: TextInputType.phone,
                     decoration: InputDecoration(labelText: "Phone Number"),
                   ),
+
                 ///for password
                 TextFormField(
                   key: ValueKey('password'),
@@ -145,6 +152,16 @@ class _AuthFormState extends State<AuthForm> {
                 SizedBox(
                   height: 12,
                 ),
+
+                if (!_isLogin)
+
+                  ///for password
+                  TextFormField(
+                    key: ValueKey('Confirm password'),
+                    onSaved: (val) => _cpassword = val,
+                    decoration: InputDecoration(labelText: "Confirm password"),
+                    obscureText: true,
+                  ),
                 if (widget._isLoading) CircularProgressIndicator(),
                 if (!widget._isLoading)
                   RaisedButton(
@@ -175,5 +192,4 @@ class _AuthFormState extends State<AuthForm> {
       ),
     );
   }
-
 }
