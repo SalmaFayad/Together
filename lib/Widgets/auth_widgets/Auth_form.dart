@@ -130,8 +130,12 @@ class _AuthFormState extends State<AuthForm> {
                   TextFormField(
                     key: ValueKey('phone'),
                     validator: (val) {
-                      if (val.isEmpty)
-                        return 'Please Enter a your Phone Number!';
+                      String patttern = r'(^(?:[+0]9)?[0-9]{10,12}$)';
+                      RegExp regExp = new RegExp(patttern);
+                      if (val.length == 0)
+                        return 'Please enter mobile number';
+                      else if (!regExp.hasMatch(val))
+                        return 'Please enter valid mobile number';
                       return null;
                     },
                     onSaved: (val) => user.phone = val,
