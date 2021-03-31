@@ -18,6 +18,7 @@ class _AuthFormState extends State<AuthForm> {
   final _formKey = GlobalKey<FormState>();
   bool _isLogin;
   String _password;
+  String _cpassword;
   UserAccount user;
 
   @override
@@ -25,6 +26,7 @@ class _AuthFormState extends State<AuthForm> {
     super.initState();
     user = UserAccount();
     _password = '';
+    _cpassword = '';
     _isLogin = true;
   }
 
@@ -33,6 +35,13 @@ class _AuthFormState extends State<AuthForm> {
     FocusScope.of(context).unfocus();
     if (isValid) {
       _formKey.currentState.save();
+      if (_password != _cpassword) {
+        Scaffold.of(context).showSnackBar(SnackBar(
+          content: Text('Password doesn\'t match'),
+          backgroundColor: Theme.of(context).errorColor,
+        ));
+        return;
+      }
       user.status = 'away';
       widget.submitFn(user, _password.trim(), _isLogin, context);
     }
@@ -141,13 +150,15 @@ class _AuthFormState extends State<AuthForm> {
                   height: 12,
                 ),
 
-                ///for password
-                TextFormField(
-                  key: ValueKey('password'),
-                  onSaved: (val) => _password = val,
-                  decoration: InputDecoration(labelText: "Password"),
-                  obscureText: true,
-                ),
+                if (!_isLogin)
+
+                  ///for password
+                  TextFormField(
+                    key: ValueKey('Confirm password'),
+                    onSaved: (val) => _cpassword = val,
+                    decoration: InputDecoration(labelText: "Confirm password"),
+                    obscureText: true,
+                  ),
                 if (widget._isLoading) CircularProgressIndicator(),
                 if (!widget._isLoading)
                   RaisedButton(
