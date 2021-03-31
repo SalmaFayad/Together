@@ -14,8 +14,6 @@ class Messages extends StatelessWidget{
     return StreamBuilder(
       stream: FirebaseFirestore.instance
           .collection('chat')
-          .where('myId' , isEqualTo: user.uid)
-          .where('userId',isEqualTo: userId)
           .orderBy('createdAt', descending: true).snapshots(),
       builder: (ctx,snapShot){
         if(snapShot.connectionState == ConnectionState.waiting||snapShot.data == null){

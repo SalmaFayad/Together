@@ -159,7 +159,7 @@ class _DeliveryUserScreenState extends State<DeliveryUserScreen> {
                           updateUserId();
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => ChatScreen(docs[index]['id'])),
+                            MaterialPageRoute(builder: (context) => ChatScreen(docs[index]['id'],docs[index]['username'])),
                           );
                         },
                         child: Card(

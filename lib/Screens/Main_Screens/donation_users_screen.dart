@@ -164,7 +164,7 @@ class _DonationUsersScreenState extends State<DonationUsersScreen> {
                           updateUserId();
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => ChatScreen(docs[index]['id'])),
+                            MaterialPageRoute(builder: (context) => ChatScreen(docs[index]['id'],docs[index]['username'])),
                           );
                         },
                         child: Card(
