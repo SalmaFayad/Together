@@ -8,12 +8,12 @@ import 'Main_Screens/delivery_users_screen.dart';
 import 'Main_Screens/donation_users_screen.dart';
 
 
-class mainPages extends StatefulWidget {
+class MainPages extends StatefulWidget {
   @override
-  _mainPagesState createState() => _mainPagesState();
+  _MainPagesState createState() => _MainPagesState();
 }
 
-class _mainPagesState extends State<mainPages> {
+class _MainPagesState extends State<MainPages> {
   PageController _pageController = PageController();
   var height = AppBar().preferredSize.height;
 
@@ -22,9 +22,9 @@ class _mainPagesState extends State<mainPages> {
 
 
   List<Widget> _screen = [
-    dataPageScreen(),
-    donationUsersScreen(),
-    deliveryUserScreen(),
+    DataPageScreen(),
+    DonationUsersScreen(),
+    DeliveryUserScreen(),
   ];
 
   int _selectedIndex = 0; // to make the icon selected

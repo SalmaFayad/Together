@@ -1,4 +1,12 @@
+import 'dart:io';
+import 'dart:typed_data';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -7,6 +15,62 @@ class ProfilePage extends StatefulWidget {
 
 class MapScreenState extends State<ProfilePage>
     with SingleTickerProviderStateMixin {
+
+
+
+  void openCamera(BuildContext context)  async{
+    final pickedFile = await ImagePicker().getImage(
+      source: ImageSource.camera ,
+    );
+    setState(() {
+      //imageFile = File(pickedFile.path);
+    });
+    Navigator.pop(context);
+  }
+
+  void openGallery(BuildContext context) async{
+    final pickedFile = await ImagePicker().getImage(
+      source: ImageSource.gallery ,
+    );
+    setState(() {
+      //imageFile = File(pickedFile.path);
+    });
+    Navigator.pop(context);
+  }
+
+
+  futureShowChoiceDialog(BuildContext context)
+  {
+    return showDialog(context: context,builder: (BuildContext context){
+      return AlertDialog(
+        title: Text("Choose option",style: TextStyle(color: Colors.blue),),
+        content: SingleChildScrollView(
+          child: ListBody(
+            children: [
+              Divider(height: 1,color: Colors.blue,),
+              ListTile(
+                onTap: (){
+                  openGallery(context);
+                },
+                title: Text("Gallery"),
+                leading: Icon(Icons.account_box,color: Colors.blue,),
+              ),
+
+              Divider(height: 1,color: Colors.blue,),
+              ListTile(
+                onTap: (){
+                  openCamera(context);
+                },
+                title: Text("Camera"),
+                leading: Icon(Icons.camera,color: Colors.blue,),
+              ),
+            ],
+          ),
+        ),);
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,18 +83,18 @@ class MapScreenState extends State<ProfilePage>
             children: <Widget>[
               Column(
                 children: <Widget>[
-                      Padding(
-                          padding: EdgeInsets.only(top: 90.0, right: 100.0),
-                          child:
-                               CircleAvatar(
-                                backgroundColor: Colors.red,
-                                radius: 25.0,
-                                child: new Icon(
-                                  Icons.camera_alt,
-                                  color: Colors.white,
-                                ),
-                          )),
-                  new Container(
+                  GestureDetector(
+                    onTap: () => futureShowChoiceDialog(context),
+                        child: Padding(
+                            padding: EdgeInsets.only(top: 40.0, right: 100.0),
+                            child:
+                                 CircleAvatar(
+                                  backgroundColor: Colors.red,
+                                  radius: 60.0,
+                            )
+                        ),
+                      ),
+                   Container(
                     color: Colors.white,
                     child: Padding(
                       padding: EdgeInsets.only(bottom: 25.0),
@@ -219,7 +283,7 @@ class MapScreenState extends State<ProfilePage>
                                   ),
                                 ],
                               )),
-                    Padding(
+                      Padding(
                       padding: EdgeInsets.only(left: 25.0, right: 25.0, top: 45.0),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,

@@ -1,11 +1,46 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:solution_challenge_project/Screens/chat_screens/chat_screen.dart';
 
-class deliveryUserScreen extends StatefulWidget {
+class DeliveryUserScreen extends StatefulWidget {
   @override
-  _deliveryUserScreenState createState() => _deliveryUserScreenState();
+  _DeliveryUserScreenState createState() => _DeliveryUserScreenState();
 }
 
-class _deliveryUserScreenState extends State<deliveryUserScreen> {
+class _DeliveryUserScreenState extends State<DeliveryUserScreen> {
+
+  CollectionReference users = FirebaseFirestore.instance.collection('users');
+  final String currentUserId = FirebaseAuth.instance.currentUser.uid;
+
+  bool isDelivery = false;
+
+  Future<void> updateUserStatus() {
+    if(isDelivery){
+      isDelivery = false;
+      return users
+          .doc(currentUserId)
+          .update({'status': 'away'});
+    }else{
+      isDelivery = true;
+      return users
+          .doc(currentUserId)
+          .update({'status': 'delivery'});
+    }
+  }
+
+  Future<void> updateUserId() {
+    return users
+        .doc(currentUserId)
+        .update({'id': currentUserId});
+  }
+
+  String valueChoose;
+  List<String> cityList = ['Cairo', 'Alexandria', 'Giza', 'Qalyubia''Port Said', 'Suez', 'Gharbia', 'Luxor',
+    'Dakahlia', 'Gharbia', 'Asyut', 'Ismailia', 'Faiyum', 'Sharqia', 'Damietta', 'Aswan', 'Minya', 'Beheira',
+    'Beni Suef', 'Red Sea', 'Qena', 'Sohag', 'Monufia', 'North Sinai'
+  ];
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -28,14 +63,29 @@ class _deliveryUserScreenState extends State<deliveryUserScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           CircleAvatar(
-                            backgroundImage: AssetImage('assets/images/photo.jpeg'),
+                            backgroundImage:
+                            AssetImage('assets/images/photo.jpeg'),
                             radius: 32,
                           ),
                           Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text('UserName'),
-                              Text('statue'),
+                              FutureBuilder<DocumentSnapshot>(
+                                future: users.doc(currentUserId).get(),
+                                builder: (BuildContext context,
+                                    AsyncSnapshot<DocumentSnapshot> snapshot) {
+                                  if (snapshot.hasError) {
+                                    return Text("Something went wrong");
+                                  }
+
+                                  if (snapshot.connectionState ==
+                                      ConnectionState.done) {
+                                    Map<String, dynamic> data = snapshot.data.data();
+                                    return Text("${data['username']}\nstatus: ${data['status']}");
+                                  }
+                                  return Text("loading");
+                                },
+                              ),
                             ],
                           ),
                         ],
@@ -55,16 +105,20 @@ class _deliveryUserScreenState extends State<deliveryUserScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             Text('Change Location'),
-                            new DropdownButton<String>(
-                              items: <String>['Ismailia', 'Cairo', 'Giza']
-                                  .map((String value) {
-                                return new DropdownMenuItem<String>(
-                                  value: value,
-                                  child: new Text(value),
-                                );
-                              }).toList(),
-                              onChanged: (_) {},
-                            ),
+                            DropdownButton(
+                                hint: Text('Select City'),
+                                value: valueChoose,
+                                onChanged: (newValue) {
+                                  setState(() {
+                                    valueChoose = newValue;
+                                  });
+                                },
+                                items: cityList.map((valueItem) {
+                                  return DropdownMenuItem(
+                                    value: valueItem,
+                                    child: Text(valueItem),
+                                  );
+                                }).toList()),
                           ],
                         ),
                       )),
@@ -72,37 +126,55 @@ class _deliveryUserScreenState extends State<deliveryUserScreen> {
               ),
             ],
           ),
-          Expanded(
-            child: Container(
-              child: ListView.builder(
-                itemCount: 3,
-                itemBuilder: (context, index) {
-                  return GestureDetector(
-                    onTap: () {
-                      // go to chat
+          StreamBuilder(
+            stream:FirebaseFirestore.instance.collection('users')
+                .where('status',isEqualTo: 'delivery')
+                .where('city',isEqualTo: valueChoose).snapshots(includeMetadataChanges: true),
+            builder: (ctx,snapShot){
+              if(snapShot.connectionState == ConnectionState.waiting){
+                return CircularProgressIndicator();
+              }
+              final docs = snapShot.data.docs;
+              return Expanded(
+                child: Container(
+                  child: ListView.builder(
+                    itemCount: docs.length,
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                        onTap: () {
+                          updateUserId();
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => ChatScreen(docs[index]['id'])),
+                          );
+                        },
+                        child: Card(
+                            elevation: 3,
+                            child: Container(
+                              // padding: const EdgeInsets.all(20),
+                              child: ListTile(
+                                  leading: CircleAvatar(
+                                    radius: 25.0,
+                                  ),
+                                  title: Text(docs[index]['username'])),
+                            )),
+                      );
                     },
-                    child: Card(
-                        elevation: 3,
-                        child: Container(
-                          // padding: const EdgeInsets.all(20),
-                          child: ListTile(
-                              leading: CircleAvatar(
-                                radius: 25.0,
-                                backgroundImage: AssetImage('assets/images/photo.jpeg')
-                              ),
-                              title: Text('UserName')),
-                        )),
-                  );
-                },
-              ),
-            ),
+                  ),
+                ),
+              );
+            },
           ),
         ],
       ),
       backgroundColor: Colors.white,
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: const Icon(Icons.compare_arrows_sharp),
+        onPressed: () {
+          setState(() {
+            updateUserStatus();
+          });
+        },
+        child: const Icon(Icons.arrow_upward_sharp),
       ),
     );
   }

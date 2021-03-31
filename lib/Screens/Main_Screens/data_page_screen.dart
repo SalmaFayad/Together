@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
-class dataPageScreen extends StatefulWidget {
+class DataPageScreen extends StatefulWidget {
   /*var height;
   dataPageScreen(this.height);*/
 
   @override
-  _dataPageScreenState createState() => _dataPageScreenState();
+  _DataPageScreenState createState() => _DataPageScreenState();
 }
 
-class _dataPageScreenState extends State<dataPageScreen> {
+class _DataPageScreenState extends State<DataPageScreen> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -28,7 +28,7 @@ class _dataPageScreenState extends State<dataPageScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              for (int i = 0; i < 100; i++)
+              for (int i = 0; i < 20; i++)
                 Card(
                   elevation: 3,
                   margin: const EdgeInsets.all(10),

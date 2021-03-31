@@ -20,7 +20,7 @@ class _connectScreenState extends State<connectScreen> {
           AnimatedContainer(
               transform: Matrix4.translationValues(XOffset, YOffset, 0)
                 ..scale(ScaleFactor),
-              child: mainPages()),
+              child: MainPages()),
         ],
       ),
     );

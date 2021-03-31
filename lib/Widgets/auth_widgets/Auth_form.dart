@@ -38,6 +38,7 @@ class _AuthFormState extends State<AuthForm> {
         city: _city,
         country: _country,
         phone: _phoneNumber,
+        imageUrl: null,
         status: 'away'
       );
       widget.submitFn(user, _password.trim(), _isLogin, context);

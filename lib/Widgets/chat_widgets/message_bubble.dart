@@ -13,7 +13,7 @@ class MessageBubble extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: !isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
+      mainAxisAlignment: isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
       children: <Widget>[
         Container(
           decoration: BoxDecoration(
@@ -22,7 +22,7 @@ class MessageBubble extends StatelessWidget{
               topLeft: Radius.circular(14),
               topRight: Radius.circular(14),
               bottomLeft: !isMe ? Radius.circular(0) : Radius.circular(14),
-              bottomRight: isMe ? Radius.circular(14) : Radius.circular(0),
+              bottomRight: isMe ? Radius.circular(0) : Radius.circular(14),
             )
           ),
           width: 140,

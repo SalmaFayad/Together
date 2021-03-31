@@ -5,6 +5,7 @@ class UserAccount {
   String city;
   String phone;
   String country;
+  String imageUrl;
   String status;
 
   UserAccount({
@@ -14,6 +15,7 @@ class UserAccount {
     this.city,
     this.country,
     this.phone,
+    this.imageUrl,
     this.status,
   });
 
@@ -24,6 +26,7 @@ class UserAccount {
         'city': city,
         'phone': phone,
         'country': country,
-        'status' : status,
+        'imageUrl': imageUrl,
+        'status': status,
       };
 }

@@ -6,12 +6,12 @@ import 'package:solution_challenge_project/Screens/chat_screens/chat_screen.dart
 import 'package:solution_challenge_project/models/databaseManager.dart';
 import 'package:solution_challenge_project/models/user.dart';
 
-class donationUsersScreen extends StatefulWidget {
+class DonationUsersScreen extends StatefulWidget {
   @override
-  _donationUsersScreenState createState() => _donationUsersScreenState();
+  _DonationUsersScreenState createState() => _DonationUsersScreenState();
 }
 
-class _donationUsersScreenState extends State<donationUsersScreen> {
+class _DonationUsersScreenState extends State<DonationUsersScreen> {
   CollectionReference users = FirebaseFirestore.instance.collection('users');
   final String currentUserId = FirebaseAuth.instance.currentUser.uid;
 
@@ -31,7 +31,7 @@ class _donationUsersScreenState extends State<donationUsersScreen> {
     }
   }
 
-  Future<void> updateUserId() async {
+  Future<void> updateUserId() {
     return users
         .doc(currentUserId)
         .update({'id': currentUserId});
@@ -39,36 +39,14 @@ class _donationUsersScreenState extends State<donationUsersScreen> {
 
 
   String valueChoose;
-  List<String> cityList = [
-    'Cairo',
-    'Alexandria',
-    'Giza',
-    'Qalyubia'
-        'Port Said',
-    'Suez',
-    'Gharbia',
-    'Luxor',
-    'Dakahlia',
-    'Gharbia',
-    'Asyut',
-    'Ismailia',
-    'Faiyum',
-    'Sharqia',
-    'Damietta',
-    'Aswan',
-    'Minya',
-    'Beheira',
-    'Beni Suef',
-    'Red Sea',
-    'Qena',
-    'Sohag',
-    '	Monufia',
-    'North Sinai'
+
+  List<String> cityList = ['Cairo', 'Alexandria', 'Giza', 'Qalyubia''Port Said', 'Suez', 'Gharbia', 'Luxor',
+    'Dakahlia', 'Gharbia', 'Asyut', 'Ismailia', 'Faiyum', 'Sharqia', 'Damietta', 'Aswan', 'Minya', 'Beheira',
+    'Beni Suef', 'Red Sea', 'Qena', 'Sohag', 'Monufia', 'North Sinai'
   ];
 
   @override
   Widget build(BuildContext context) {
-    Map<String, dynamic> data;
     Size size = MediaQuery.of(context).size;
 
     double sizeTopConatainer = size.height / 6;
@@ -153,7 +131,9 @@ class _donationUsersScreenState extends State<donationUsersScreen> {
             ],
           ),
           StreamBuilder(
-            stream:FirebaseFirestore.instance.collection('users').where('status',isEqualTo: 'donor').snapshots(includeMetadataChanges: true),
+            stream:FirebaseFirestore.instance.collection('users')
+            .where('status',isEqualTo: 'donor')
+            .where('city',isEqualTo: valueChoose).snapshots(includeMetadataChanges: true),
             builder: (ctx,snapShot){
               if(snapShot.connectionState == ConnectionState.waiting){
                 return CircularProgressIndicator();
