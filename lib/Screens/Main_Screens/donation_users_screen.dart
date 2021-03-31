@@ -92,8 +92,9 @@ class _DonationUsersScreenState extends State<DonationUsersScreen> {
                                     ConnectionState.done) {
                                   Map<String, dynamic> data =
                                       snapshot.data.data();
+
                                   return CircleAvatar(
-                                    backgroundImage: data['image'] == null
+                                    backgroundImage: data['imageUrl'] == null
                                         ? null
                                         : NetworkImage(data['imageUrl']),
                                     radius: 32,

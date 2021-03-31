@@ -9,36 +9,50 @@ class DeliveryUserScreen extends StatefulWidget {
 }
 
 class _DeliveryUserScreenState extends State<DeliveryUserScreen> {
-
   CollectionReference users = FirebaseFirestore.instance.collection('users');
   final String currentUserId = FirebaseAuth.instance.currentUser.uid;
 
   bool isDelivery = false;
 
   Future<void> updateUserStatus() {
-    if(isDelivery){
+    if (isDelivery) {
       isDelivery = false;
-      return users
-          .doc(currentUserId)
-          .update({'status': 'away'});
-    }else{
+      return users.doc(currentUserId).update({'status': 'away'});
+    } else {
       isDelivery = true;
-      return users
-          .doc(currentUserId)
-          .update({'status': 'delivery'});
+      return users.doc(currentUserId).update({'status': 'delivery'});
     }
   }
 
   Future<void> updateUserId() {
-    return users
-        .doc(currentUserId)
-        .update({'id': currentUserId});
+    return users.doc(currentUserId).update({'id': currentUserId});
   }
 
   String valueChoose;
-  List<String> cityList = ['Cairo', 'Alexandria', 'Giza', 'Qalyubia''Port Said', 'Suez', 'Gharbia', 'Luxor',
-    'Dakahlia', 'Gharbia', 'Asyut', 'Ismailia', 'Faiyum', 'Sharqia', 'Damietta', 'Aswan', 'Minya', 'Beheira',
-    'Beni Suef', 'Red Sea', 'Qena', 'Sohag', 'Monufia', 'North Sinai'
+  List<String> cityList = [
+    'Cairo',
+    'Alexandria',
+    'Giza',
+    'Qalyubia' 'Port Said',
+    'Suez',
+    'Gharbia',
+    'Luxor',
+    'Dakahlia',
+    'Gharbia',
+    'Asyut',
+    'Ismailia',
+    'Faiyum',
+    'Sharqia',
+    'Damietta',
+    'Aswan',
+    'Minya',
+    'Beheira',
+    'Beni Suef',
+    'Red Sea',
+    'Qena',
+    'Sohag',
+    'Monufia',
+    'North Sinai'
   ];
 
   @override
@@ -65,22 +79,23 @@ class _DeliveryUserScreenState extends State<DeliveryUserScreen> {
                           FutureBuilder<DocumentSnapshot>(
                               future: users.doc(currentUserId).get(),
                               builder: (BuildContext context,
-                                  AsyncSnapshot<DocumentSnapshot> snapshot){
+                                  AsyncSnapshot<DocumentSnapshot> snapshot) {
                                 if (snapshot.hasError) {
                                   return Text("Something went wrong");
                                 }
                                 if (snapshot.connectionState ==
                                     ConnectionState.done) {
-                                  Map<String, dynamic> data = snapshot.data.data();
+                                  Map<String, dynamic> data =
+                                      snapshot.data.data();
                                   return CircleAvatar(
-                                    backgroundImage:
-                                    NetworkImage(data['imageUrl']),
+                                    backgroundImage: data['imageUrl'] == null
+                                        ? null
+                                        : NetworkImage(data['imageUrl']),
                                     radius: 32,
                                   );
                                 }
                                 return Text("loading");
-                              }
-                          ),
+                              }),
                           Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -94,8 +109,10 @@ class _DeliveryUserScreenState extends State<DeliveryUserScreen> {
 
                                   if (snapshot.connectionState ==
                                       ConnectionState.done) {
-                                    Map<String, dynamic> data = snapshot.data.data();
-                                    return Text("${data['username']}\nstatus: ${data['status']}");
+                                    Map<String, dynamic> data =
+                                        snapshot.data.data();
+                                    return Text(
+                                        "${data['username']}\nstatus: ${data['status']}");
                                   }
                                   return Text("loading");
                                 },
@@ -141,11 +158,13 @@ class _DeliveryUserScreenState extends State<DeliveryUserScreen> {
             ],
           ),
           StreamBuilder(
-            stream:FirebaseFirestore.instance.collection('users')
-                .where('status',isEqualTo: 'delivery')
-                .where('city',isEqualTo: valueChoose).snapshots(includeMetadataChanges: true),
-            builder: (ctx,snapShot){
-              if(snapShot.connectionState == ConnectionState.waiting){
+            stream: FirebaseFirestore.instance
+                .collection('users')
+                .where('status', isEqualTo: 'delivery')
+                .where('city', isEqualTo: valueChoose)
+                .snapshots(includeMetadataChanges: true),
+            builder: (ctx, snapShot) {
+              if (snapShot.connectionState == ConnectionState.waiting) {
                 return CircularProgressIndicator();
               }
               final docs = snapShot.data.docs;
@@ -159,7 +178,9 @@ class _DeliveryUserScreenState extends State<DeliveryUserScreen> {
                           updateUserId();
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => ChatScreen(docs[index]['id'])),
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    ChatScreen(docs[index]['id'])),
                           );
                         },
                         child: Card(
@@ -168,7 +189,8 @@ class _DeliveryUserScreenState extends State<DeliveryUserScreen> {
                               // padding: const EdgeInsets.all(20),
                               child: ListTile(
                                   leading: CircleAvatar(
-                                    backgroundImage: NetworkImage(docs[index]['imageUrl']),
+                                    backgroundImage:
+                                        NetworkImage(docs[index]['imageUrl']),
                                     radius: 25.0,
                                   ),
                                   title: Text(docs[index]['username'])),
