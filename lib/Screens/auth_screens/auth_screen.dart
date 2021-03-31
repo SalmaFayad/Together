@@ -32,6 +32,9 @@ class _AuthScreenState extends State<AuthScreen> {
           email: user.email,
           password: password,
         );
+        user.id = authResult.user.uid;
+        user.imageUrl =
+            'https://static.wikia.nocookie.net/joke-powers/images/7/7b/Powerless_man.jpg/revision/latest?cb=20190704041550';
         await FirebaseFirestore.instance
             .collection('users')
             .doc(authResult.user.uid)
