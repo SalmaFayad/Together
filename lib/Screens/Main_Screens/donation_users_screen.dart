@@ -14,6 +14,7 @@ class DonationUsersScreen extends StatefulWidget {
 class _DonationUsersScreenState extends State<DonationUsersScreen> {
   CollectionReference users = FirebaseFirestore.instance.collection('users');
   final String currentUserId = FirebaseAuth.instance.currentUser.uid;
+  Map<String, dynamic> data;
 
   bool isDonor = false;
 
@@ -66,10 +67,24 @@ class _DonationUsersScreenState extends State<DonationUsersScreen> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          CircleAvatar(
-                            backgroundImage:
-                                AssetImage('assets/images/photo.jpeg'),
-                            radius: 32,
+                          FutureBuilder<DocumentSnapshot>(
+                              future: users.doc(currentUserId).get(),
+                              builder: (BuildContext context,
+                                  AsyncSnapshot<DocumentSnapshot> snapshot){
+                                if (snapshot.hasError) {
+                                  return Text("Something went wrong");
+                                }
+                                if (snapshot.connectionState ==
+                                    ConnectionState.done) {
+                                  Map<String, dynamic> data = snapshot.data.data();
+                                  return CircleAvatar(
+                                    backgroundImage:
+                                    NetworkImage(data['imageUrl']),
+                                    radius: 32,
+                                  );
+                                }
+                                return Text("loading");
+                              }
                           ),
                           Column(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -158,6 +173,7 @@ class _DonationUsersScreenState extends State<DonationUsersScreen> {
                               // padding: const EdgeInsets.all(20),
                               child: ListTile(
                                   leading: CircleAvatar(
+                                    backgroundImage: NetworkImage(docs[index]['imageUrl']),
                                       radius: 25.0,
                                       ),
                                   title: Text(docs[index]['username'])),
