@@ -19,45 +19,31 @@ class _DonationUsersScreenState extends State<DonationUsersScreen> {
   bool isDonor = false;
 
   Future<void> updateUserStatus() {
-    if (isDonor) {
+    if(isDonor){
       isDonor = false;
-      return users.doc(currentUserId).update({'status': 'away'});
-    } else {
+      return users
+          .doc(currentUserId)
+          .update({'status': 'away'});
+    }else{
       isDonor = true;
-      return users.doc(currentUserId).update({'status': 'donor'});
+      return users
+          .doc(currentUserId)
+          .update({'status': 'donor'});
     }
   }
 
   Future<void> updateUserId() {
-    return users.doc(currentUserId).update({'id': currentUserId});
+    return users
+        .doc(currentUserId)
+        .update({'id': currentUserId});
   }
+
 
   String valueChoose;
 
-  List<String> cityList = [
-    'Cairo',
-    'Alexandria',
-    'Giza',
-    'Qalyubia' 'Port Said',
-    'Suez',
-    'Gharbia',
-    'Luxor',
-    'Dakahlia',
-    'Gharbia',
-    'Asyut',
-    'Ismailia',
-    'Faiyum',
-    'Sharqia',
-    'Damietta',
-    'Aswan',
-    'Minya',
-    'Beheira',
-    'Beni Suef',
-    'Red Sea',
-    'Qena',
-    'Sohag',
-    'Monufia',
-    'North Sinai'
+  List<String> cityList = ['Cairo', 'Alexandria', 'Giza', 'Qalyubia''Port Said', 'Suez', 'Gharbia', 'Luxor',
+    'Dakahlia', 'Gharbia', 'Asyut', 'Ismailia', 'Faiyum', 'Sharqia', 'Damietta', 'Aswan', 'Minya', 'Beheira',
+    'Beni Suef', 'Red Sea', 'Qena', 'Sohag', 'Monufia', 'North Sinai'
   ];
 
   @override
@@ -84,12 +70,13 @@ class _DonationUsersScreenState extends State<DonationUsersScreen> {
                           FutureBuilder<DocumentSnapshot>(
                               future: users.doc(currentUserId).get(),
                               builder: (BuildContext context,
-                                  AsyncSnapshot<DocumentSnapshot> snapshot) {
+                                  AsyncSnapshot<DocumentSnapshot> snapshot){
                                 if (snapshot.hasError) {
                                   return Text("Something went wrong");
                                 }
                                 if (snapshot.connectionState ==
                                     ConnectionState.done) {
+<<<<<<< HEAD
                                   Map<String, dynamic> data =
                                       snapshot.data.data();
 
@@ -97,11 +84,18 @@ class _DonationUsersScreenState extends State<DonationUsersScreen> {
                                     backgroundImage: data['imageUrl'] == null
                                         ? null
                                         : NetworkImage(data['imageUrl']),
+=======
+                                  Map<String, dynamic> data = snapshot.data.data();
+                                  return CircleAvatar(
+                                    backgroundImage:
+                                    NetworkImage(data['imageUrl']),
+>>>>>>> eaf04c2472cf3098550c0fdba4fe5a9f092de453
                                     radius: 32,
                                   );
                                 }
                                 return Text("loading");
-                              }),
+                              }
+                          ),
                           Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -115,10 +109,8 @@ class _DonationUsersScreenState extends State<DonationUsersScreen> {
 
                                   if (snapshot.connectionState ==
                                       ConnectionState.done) {
-                                    Map<String, dynamic> data =
-                                        snapshot.data.data();
-                                    return Text(
-                                        "${data['username']}\nstatus: ${data['status']}");
+                                    Map<String, dynamic> data = snapshot.data.data();
+                                    return Text("${data['username']}\nstatus: ${data['status']}");
                                   }
                                   return Text("loading");
                                 },
@@ -164,13 +156,11 @@ class _DonationUsersScreenState extends State<DonationUsersScreen> {
             ],
           ),
           StreamBuilder(
-            stream: FirebaseFirestore.instance
-                .collection('users')
-                .where('status', isEqualTo: 'donor')
-                .where('city', isEqualTo: valueChoose)
-                .snapshots(includeMetadataChanges: true),
-            builder: (ctx, snapShot) {
-              if (snapShot.connectionState == ConnectionState.waiting) {
+            stream:FirebaseFirestore.instance.collection('users')
+            .where('status',isEqualTo: 'donor')
+            .where('city',isEqualTo: valueChoose).snapshots(includeMetadataChanges: true),
+            builder: (ctx,snapShot){
+              if(snapShot.connectionState == ConnectionState.waiting){
                 return CircularProgressIndicator();
               }
               final docs = snapShot.data.docs;
@@ -184,9 +174,7 @@ class _DonationUsersScreenState extends State<DonationUsersScreen> {
                           updateUserId();
                           Navigator.push(
                             context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    ChatScreen(docs[index]['id'])),
+                            MaterialPageRoute(builder: (context) => ChatScreen(docs[index]['id'],docs[index]['username'])),
                           );
                         },
                         child: Card(
@@ -195,10 +183,9 @@ class _DonationUsersScreenState extends State<DonationUsersScreen> {
                               // padding: const EdgeInsets.all(20),
                               child: ListTile(
                                   leading: CircleAvatar(
-                                    backgroundImage:
-                                        NetworkImage(docs[index]['imageUrl']),
-                                    radius: 25.0,
-                                  ),
+                                    backgroundImage: NetworkImage(docs[index]['imageUrl']),
+                                      radius: 25.0,
+                                      ),
                                   title: Text(docs[index]['username'])),
                             )),
                       );

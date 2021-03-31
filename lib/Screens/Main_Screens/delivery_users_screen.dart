@@ -179,8 +179,9 @@ class _DeliveryUserScreenState extends State<DeliveryUserScreen> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) =>
-                                    ChatScreen(docs[index]['id'])),
+                                builder: (context) => ChatScreen(
+                                    docs[index]['id'],
+                                    docs[index]['username'])),
                           );
                         },
                         child: Card(
