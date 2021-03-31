@@ -96,28 +96,39 @@ class _DeliveryUserScreenState extends State<DeliveryUserScreen> {
                                 }
                                 return Text("loading");
                               }),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              FutureBuilder<DocumentSnapshot>(
-                                future: users.doc(currentUserId).get(),
-                                builder: (BuildContext context,
-                                    AsyncSnapshot<DocumentSnapshot> snapshot) {
-                                  if (snapshot.hasError) {
-                                    return Text("Something went wrong");
-                                  }
+                          FutureBuilder<DocumentSnapshot>(
+                            future: users.doc(currentUserId).get(),
+                            builder: (BuildContext context,
+                                AsyncSnapshot<DocumentSnapshot> snapshot) {
+                              if (snapshot.hasError) {
+                                return Text("Something went wrong");
+                              }
 
-                                  if (snapshot.connectionState ==
-                                      ConnectionState.done) {
-                                    Map<String, dynamic> data =
-                                        snapshot.data.data();
-                                    return Text(
-                                        "${data['username']}\nstatus: ${data['status']}");
-                                  }
-                                  return Text("loading");
-                                },
-                              ),
-                            ],
+                              if (snapshot.connectionState ==
+                                  ConnectionState.done) {
+                                Map<String, dynamic> data =
+                                    snapshot.data.data();
+                                return Container(
+                                  alignment: Alignment.topLeft,
+                                  width: MediaQuery.of(context).size.width / 4,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "${data['username']}",
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                      Text(
+                                        'status: ${data['status']}',
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              }
+                              return Text("loading");
+                            },
                           ),
                         ],
                       ),
