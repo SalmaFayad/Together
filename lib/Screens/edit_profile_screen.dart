@@ -43,26 +43,26 @@ class MapScreenState extends State<ProfilePage>
   {
     return showDialog(context: context,builder: (BuildContext context){
       return AlertDialog(
-        title: Text("Choose option",style: TextStyle(color: Colors.blue),),
+        title: Text("Choose option",style: TextStyle(color: Color(0xFFFBC02D),),),
         content: SingleChildScrollView(
           child: ListBody(
             children: [
-              Divider(height: 1,color: Colors.blue,),
+              Divider(height: 1,color: Color(0xFFFBC02D),),
               ListTile(
                 onTap: (){
                   openGallery(context);
                 },
                 title: Text("Gallery"),
-                leading: Icon(Icons.account_box,color: Colors.blue,),
+                leading: Icon(Icons.account_box,color: Colors.grey[700],),
               ),
 
-              Divider(height: 1,color: Colors.blue,),
+              Divider(height: 1,color: Color(0xFFFBC02D),),
               ListTile(
                 onTap: (){
                   openCamera(context);
                 },
                 title: Text("Camera"),
-                leading: Icon(Icons.camera,color: Colors.blue,),
+                leading: Icon(Icons.camera,color: Colors.grey[700],),
               ),
             ],
           ),
@@ -89,7 +89,7 @@ class MapScreenState extends State<ProfilePage>
                             padding: EdgeInsets.only(top: 40.0, right: 100.0),
                             child:
                                  CircleAvatar(
-                                  backgroundColor: Colors.red,
+                                 backgroundColor: Colors.grey[700],
                                   radius: 60.0,
                             )
                         ),
@@ -128,7 +128,7 @@ class MapScreenState extends State<ProfilePage>
                                     children: <Widget>[
                                       GestureDetector(
                                         child: CircleAvatar(
-                                          backgroundColor: Colors.red,
+                                          backgroundColor: Colors.grey[700],
                                           radius: 14.0,
                                           child: Icon(
                                             Icons.edit,
@@ -296,7 +296,7 @@ class MapScreenState extends State<ProfilePage>
                                   child: RaisedButton(
                                     child: Text("Save"),
                                     textColor: Colors.white,
-                                    color: Colors.green,
+                                    color: Color(0xFFFBC02D),
                                     onPressed: () {
                                       setState(() {
                                         FocusScope.of(context).requestFocus(new FocusNode());
@@ -315,7 +315,7 @@ class MapScreenState extends State<ProfilePage>
                                   child: RaisedButton(
                                     child: Text("Cancel"),
                                     textColor: Colors.white,
-                                    color: Colors.red,
+                                    //color: Colors.red,
                                     onPressed: () {
                                       setState(() {});
                                     },
