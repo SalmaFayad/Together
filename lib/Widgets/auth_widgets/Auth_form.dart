@@ -16,31 +16,24 @@ class AuthForm extends StatefulWidget {
 
 class _AuthFormState extends State<AuthForm> {
   final _formKey = GlobalKey<FormState>();
-  bool _isLogin = true;
-  String _email = '';
-  String _password = '';
-  String _username = '';
-  String _city='';
-  String _country='';
-  String _phoneNumber='';
+  bool _isLogin;
+  String _password;
   UserAccount user;
 
+  @override
+  void initState() {
+    super.initState();
+    user = UserAccount();
+    _password = '';
+    _isLogin = true;
+  }
 
   void _submit() {
     final isValid = _formKey.currentState.validate();
     FocusScope.of(context).unfocus();
     if (isValid) {
       _formKey.currentState.save();
-      user = UserAccount(
-        id: null,
-        email: _email,
-        name: _username,
-        city: _city,
-        country: _country,
-        phone: _phoneNumber,
-        imageUrl: null,
-        status: 'away'
-      );
+      user.status = 'away';
       widget.submitFn(user, _password.trim(), _isLogin, context);
     }
   }
@@ -79,7 +72,7 @@ class _AuthFormState extends State<AuthForm> {
                       return 'Please Enter a valid Email!';
                     return null;
                   },
-                  onSaved: (val) => _email = val,
+                  onSaved: (val) => user.email = val,
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(labelText: "Email Address"),
                 ),
@@ -93,37 +86,38 @@ class _AuthFormState extends State<AuthForm> {
                         return "Please enter at least 6 characters";
                       return null;
                     },
-                    onSaved: (val) => _username = val,
+                    onSaved: (val) => user.name = val,
                     decoration: InputDecoration(labelText: "Username"),
                   ),
-              if(!_isLogin)
-                ///for city
-                TextFormField(
-                  key: ValueKey('city'),
-                  validator: (val) {
-                    if (val.isEmpty)
-                      return 'Please Enter a your City!';
-                    return null;
-                  },
-                  onSaved: (val) => _city = val,
-                  keyboardType: TextInputType.text,
-                  decoration: InputDecoration(labelText: "City"),
-                ),
-                if(!_isLogin)
-                ///for country
+                if (!_isLogin)
+
+                  ///for city
+                  TextFormField(
+                    key: ValueKey('city'),
+                    validator: (val) {
+                      if (val.isEmpty) return 'Please Enter a your City!';
+                      return null;
+                    },
+                    onSaved: (val) => user.city = val,
+                    keyboardType: TextInputType.text,
+                    decoration: InputDecoration(labelText: "City"),
+                  ),
+                if (!_isLogin)
+
+                  ///for country
                   TextFormField(
                     key: ValueKey('country'),
                     validator: (val) {
-                      if (val.isEmpty)
-                        return 'Please Enter a your Country!';
+                      if (val.isEmpty) return 'Please Enter a your Country!';
                       return null;
                     },
-                    onSaved: (val) => _country = val,
+                    onSaved: (val) => user.country = val,
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(labelText: "Country"),
                   ),
-                if(!_isLogin)
-                ///for phone number
+                if (!_isLogin)
+
+                  ///for phone number
                   TextFormField(
                     key: ValueKey('phone'),
                     validator: (val) {
@@ -131,10 +125,11 @@ class _AuthFormState extends State<AuthForm> {
                         return 'Please Enter a your Phone Number!';
                       return null;
                     },
-                    onSaved: (val) => _phoneNumber = val,
+                    onSaved: (val) => user.phone = val,
                     keyboardType: TextInputType.phone,
                     decoration: InputDecoration(labelText: "Phone Number"),
                   ),
+
                 ///for password
                 TextFormField(
                   key: ValueKey('password'),
@@ -144,6 +139,14 @@ class _AuthFormState extends State<AuthForm> {
                 ),
                 SizedBox(
                   height: 12,
+                ),
+
+                ///for password
+                TextFormField(
+                  key: ValueKey('password'),
+                  onSaved: (val) => _password = val,
+                  decoration: InputDecoration(labelText: "Password"),
+                  obscureText: true,
                 ),
                 if (widget._isLoading) CircularProgressIndicator(),
                 if (!widget._isLoading)
@@ -175,5 +178,4 @@ class _AuthFormState extends State<AuthForm> {
       ),
     );
   }
-
 }
