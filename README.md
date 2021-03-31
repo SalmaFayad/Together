@@ -1,5 +1,5 @@
 # Together
-<img src="lib/Screens/assests/togetherLogo.png" style = "display: block;margin-left: auto;margin-right: auto; width:150px ; height:150px">
+<img src="lib/Screens/assests/togetherLogo.png" width:150 ; height:150">
 
 
 Together it is a platform to help people inneed of food and to create an environment for communication between people and sharing meals with Poor people 
