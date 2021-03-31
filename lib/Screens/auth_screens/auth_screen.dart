@@ -33,7 +33,7 @@ class _AuthScreenState extends State<AuthScreen> {
           password: password,
         );
         user.id = authResult.user.uid;
-        user.imageUrl = '';
+
         // user.imageUrl =
         //     'https://static.wikia.nocookie.net/joke-powers/images/7/7b/Powerless_man.jpg/revision/latest?cb=20190704041550';
         await FirebaseFirestore.instance

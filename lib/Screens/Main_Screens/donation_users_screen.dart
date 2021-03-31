@@ -76,10 +76,20 @@ class _DonationUsersScreenState extends State<DonationUsersScreen> {
                                 }
                                 if (snapshot.connectionState ==
                                     ConnectionState.done) {
+<<<<<<< HEAD
+                                  Map<String, dynamic> data =
+                                      snapshot.data.data();
+
+                                  return CircleAvatar(
+                                    backgroundImage: data['imageUrl'] == null
+                                        ? null
+                                        : NetworkImage(data['imageUrl']),
+=======
                                   Map<String, dynamic> data = snapshot.data.data();
                                   return CircleAvatar(
                                     backgroundImage:
                                     NetworkImage(data['imageUrl']),
+>>>>>>> eaf04c2472cf3098550c0fdba4fe5a9f092de453
                                     radius: 32,
                                   );
                                 }
