@@ -7,7 +7,6 @@ import 'Main_Screens/data_page_screen.dart';
 import 'Main_Screens/delivery_users_screen.dart';
 import 'Main_Screens/donation_users_screen.dart';
 
-
 class MainPages extends StatefulWidget {
   @override
   _MainPagesState createState() => _MainPagesState();
@@ -19,7 +18,6 @@ class _MainPagesState extends State<MainPages> {
 
   CollectionReference users = FirebaseFirestore.instance.collection('users');
   final String currentUserId = FirebaseAuth.instance.currentUser.uid;
-
 
   List<Widget> _screen = [
     DataPageScreen(),
@@ -48,8 +46,7 @@ class _MainPagesState extends State<MainPages> {
                 ? 'Donors'
                 : _selectedIndex == 2
                     ? 'Delivery'
-                    : ''
-        ),
+                    : ''),
       ),
       body: PageView(
         // to swep between screens
@@ -59,28 +56,40 @@ class _MainPagesState extends State<MainPages> {
         physics: NeverScrollableScrollPhysics(),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        fixedColor: Colors.black,
+        currentIndex: _selectedIndex,
         onTap: _onItemTapped,
+        selectedItemColor: Colors.black,
         items: [
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.data_usage,
-              color: _selectedIndex == 0 ? Color(0xFF757575) : Colors.black,
+            icon: Padding(
+              padding: EdgeInsets.only(bottom: 3),
+              child: Image.asset(
+                'assets/data.png',
+                width: 20,
+                color: _selectedIndex == 0 ? Colors.black : Color(0xFF757575),
+              ),
             ),
             label: 'Data',
           ),
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.person,
-              color: _selectedIndex == 1 ? Color(0xFF757575) : Colors.black,
+            icon: Padding(
+              padding: EdgeInsets.only(bottom: 3),
+              child: Image.asset(
+                'assets/donor.png',
+                width: 20,
+                color: _selectedIndex == 1 ? Colors.black : Color(0xFF757575),
+              ),
             ),
             label: 'Donors',
           ),
-
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.delivery_dining,
-              color: _selectedIndex == 2 ? Color(0xFF757575) : Colors.black,
+            icon: Padding(
+              padding: EdgeInsets.only(bottom: 3),
+              child: Image.asset(
+                'assets/delivery.png',
+                width: 20,
+                color: _selectedIndex == 2 ? Colors.black : Color(0xFF757575),
+              ),
             ),
             label: 'Delivery',
           ),
