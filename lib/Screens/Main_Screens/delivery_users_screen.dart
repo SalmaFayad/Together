@@ -110,7 +110,7 @@ class _DeliveryUserScreenState extends State<DeliveryUserScreen> {
                                     snapshot.data.data();
                                 return Container(
                                   alignment: Alignment.topLeft,
-                                  width: MediaQuery.of(context).size.width / 4,
+                                  width: MediaQuery.of(context).size.width / 4 - 4.0,
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
