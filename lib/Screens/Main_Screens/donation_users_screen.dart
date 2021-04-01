@@ -120,7 +120,7 @@ class _DonationUsersScreenState extends State<DonationUsersScreen> {
                                     return Container(
                                       alignment: Alignment.topLeft,
                                       width:
-                                          MediaQuery.of(context).size.width / 4,
+                                          MediaQuery.of(context).size.width / 4 - 4.0,
                                       child: Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
