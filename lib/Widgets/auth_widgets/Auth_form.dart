@@ -34,7 +34,7 @@ class _AuthFormState extends State<AuthForm> {
     FocusScope.of(context).unfocus();
     if (isValid) {
       _formKey.currentState.save();
-      if (_password != _cpassword) {
+      if (_password != _cpassword && !_isLogin) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text('Password doesn\'t match'),
           backgroundColor: Theme.of(context).errorColor,
