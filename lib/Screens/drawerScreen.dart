@@ -55,7 +55,7 @@ class _drawerScreenState extends State<drawerScreen> {
 
                   if (snapshot.connectionState == ConnectionState.done) {
                     Map<String, dynamic> data = snapshot.data.data();
-                    return Text("${data['username']}");
+                    return Text("${data['username']}",style: TextStyle(fontWeight: FontWeight.bold),);
                   }
 
                   return Text("loading");
@@ -65,18 +65,10 @@ class _drawerScreenState extends State<drawerScreen> {
           ),
         ),
       ),
-      SizedBox(
-        height: 20.0,
-      ),
       ListTile(
         onTap: () {
           // go to profile page
         },
-        leading: Icon(
-          Icons.person,
-          color: Colors.black,
-        ),
-        title: Text("Your Profile"),
       ),
       ListTile(
         onTap: () {},
@@ -90,7 +82,7 @@ class _drawerScreenState extends State<drawerScreen> {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => ProfilePage()),
+            MaterialPageRoute(builder: (context) => EditProfile()),
           );
         },
         leading: Icon(
