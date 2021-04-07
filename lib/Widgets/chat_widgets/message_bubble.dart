@@ -17,7 +17,7 @@ class MessageBubble extends StatelessWidget{
       children: <Widget>[
         Container(
           decoration: BoxDecoration(
-            color: !isMe ? Colors.grey[300] : Colors.blueAccent,
+            color: !isMe ? Colors.grey[700] : Color(0xFFFBC02D),
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(14),
               topRight: Radius.circular(14),
@@ -32,20 +32,12 @@ class MessageBubble extends StatelessWidget{
             crossAxisAlignment: !isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                username,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: !isMe
-                      ?Colors.black
-                      :Colors.white
-                ),
-              ),
-              Text(
                 message,
                 style: TextStyle(
                     color: isMe
                         ?Colors.black
-                        :Colors.white
+                        :Colors.white,
+                  fontWeight: FontWeight.bold
                 ),
                 textAlign: !isMe ? TextAlign.end : TextAlign.start,
               ),

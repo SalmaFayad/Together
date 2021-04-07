@@ -192,7 +192,10 @@ class _DeliveryUserScreenState extends State<DeliveryUserScreen> {
                             MaterialPageRoute(
                                 builder: (context) => ChatScreen(
                                     docs[index]['id'],
-                                    docs[index]['username'])),
+                                    docs[index]['username'],
+                                    docs[index]['imageUrl'],
+                                )
+                            ),
                           );
                         },
                         child: Card(
