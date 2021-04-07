@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+
 class NewMessage extends StatefulWidget{
   final String userId;
   NewMessage(this.userId);
@@ -17,14 +18,30 @@ class _NewMessageState extends State<NewMessage> {
   _sendMessage() async{
     FocusScope.of(context).unfocus();
     final user =  FirebaseAuth.instance.currentUser;
-    final userData = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
-    FirebaseFirestore.instance.collection('chat').add({
-      'text': _enteredMessage,
-      'createdAt': Timestamp.now(),
-      'username': userData['username'],
-      'myId': user.uid,
-      'userId': widget.userId
-    });
+    if( FirebaseFirestore.instance.collection('chat').doc(user.uid+'-'+widget.userId)
+        .collection(user.uid+'-'+widget.userId).get() != null){
+      final userData = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
+      FirebaseFirestore.instance.collection('chat').doc(user.uid+'-'+widget.userId)
+          .collection(user.uid+'-'+widget.userId).add({
+        'text': _enteredMessage,
+        'createdAt': Timestamp.now(),
+        'username': userData['username'],
+        'myId': user.uid,
+        'userId': widget.userId
+      });
+    }
+    else{
+      final userData = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
+      FirebaseFirestore.instance.collection('chat').doc(widget.userId+'-'+user.uid)
+          .collection(widget.userId+'-'+user.uid).add({
+        'text': _enteredMessage,
+        'createdAt': Timestamp.now(),
+        'username': userData['username'],
+        'myId': user.uid,
+        'userId': widget.userId
+      });
+    }
+
     _controller.clear();
   }
 

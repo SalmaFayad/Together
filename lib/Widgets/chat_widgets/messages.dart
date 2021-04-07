@@ -5,32 +5,62 @@ import 'package:solution_challenge_project/Widgets/chat_widgets/message_bubble.d
 
 class Messages extends StatelessWidget{
 
-  final String userId;
+  String user =  FirebaseAuth.instance.currentUser.uid;
+  String tmp;
+  String userId;
   Messages({this.userId});
-  final user =  FirebaseAuth.instance.currentUser;
 
-  @override
-  Widget build(BuildContext context) {
+  Widget changePath(){
     return StreamBuilder(
       stream: FirebaseFirestore.instance
-          .collection('chat')
+          .collection('chat').doc(userId+'-'+user)
+          .collection(userId+'-'+user)
           .orderBy('createdAt', descending: true).snapshots(),
       builder: (ctx,snapShot){
         if(snapShot.connectionState == ConnectionState.waiting||snapShot.data == null){
           return CircularProgressIndicator();
         }
         final docs = snapShot.data.docs;
-        return ListView.builder(
-          reverse: true,
-          itemCount: docs.length,
-          itemBuilder: (ctx,index) => MessageBubble(
-            docs[index]['text'],
-            docs[index]['username'],
-            docs[index]['myId'] == user.uid,
-          )
+        return  ListView.builder(
+            reverse: true,
+            itemCount: docs.length,
+            itemBuilder: (ctx,index) => MessageBubble(
+              docs[index]['text'],
+              docs[index]['username'],
+              docs[index]['myId'] == user,
+            )
         );
       },
     );
   }
 
+  @override
+  Widget build(BuildContext context) {
+      return StreamBuilder(
+        stream: FirebaseFirestore.instance
+            .collection('chat').doc(user+'-'+userId)
+            .collection(user+'-'+userId)
+            .orderBy('createdAt', descending: true).snapshots(),
+        builder: (ctx,snapShot){
+          if(snapShot.connectionState == ConnectionState.waiting||snapShot.data == null){
+            return CircularProgressIndicator();
+          }
+          final docs = snapShot.data.docs;
+          if(docs.length == 0){
+            return changePath();
+          }
+          else{
+            return ListView.builder(
+                reverse: true,
+                itemCount: docs.length,
+                itemBuilder: (ctx,index) => MessageBubble(
+                  docs[index]['text'],
+                  docs[index]['username'],
+                  docs[index]['myId'] == user,
+                )
+            );
+          }
+        },
+      );
+  }
 }

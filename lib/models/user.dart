@@ -5,7 +5,7 @@ class UserAccount {
   String city;
   String phone;
   String country;
-  String imageUrl;
+  String imageUrl = 'https://d1nhio0ox7pgb.cloudfront.net/_img/g_collection_png/standard/512x512/user.png';
   String status;
 
   UserAccount({
