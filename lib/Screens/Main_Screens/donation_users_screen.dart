@@ -3,8 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
 import 'package:solution_challenge_project/Screens/chat_screens/chat_screen.dart';
-import 'package:solution_challenge_project/models/databaseManager.dart';
-import 'package:solution_challenge_project/models/user.dart';
+
 
 class DonationUsersScreen extends StatefulWidget {
   @override
