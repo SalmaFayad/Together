@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:solution_challenge_project/models/user.dart';
 
@@ -169,8 +170,17 @@ class _AuthFormState extends State<AuthForm> {
                     onPressed: _submit,
                   ),
                 if (!widget._isLoading)
-                  RaisedButton(
-                    child: Text('sign in with google'),
+                  OutlineButton.icon(
+                    label: Text('sign in with google',style: TextStyle(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold,
+                    ),),
+                    shape: StadiumBorder(),
+                    padding: EdgeInsets.symmetric(horizontal: 12,vertical: 8),
+                    highlightedBorderColor: Color(0xFFFBC02D),
+                    borderSide: BorderSide(color: Colors.grey[700],width: 1.5),
+                    textColor: Colors.black,
+                    icon: FaIcon(FontAwesomeIcons.google,color: Color(0xFFFBC02D),),
                     onPressed: handleSignIn,
                   ),
                 if (!widget._isLoading)
