@@ -18,20 +18,18 @@ class _NewMessageState extends State<NewMessage> {
   _sendMessage() async{
     FocusScope.of(context).unfocus();
     final user =  FirebaseAuth.instance.currentUser;
-    if( FirebaseFirestore.instance.collection('chat').doc(user.uid+'-'+widget.userId)
-        .collection(user.uid+'-'+widget.userId).get() != null){
-      final userData = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
-      FirebaseFirestore.instance.collection('chat').doc(user.uid+'-'+widget.userId)
-          .collection(user.uid+'-'+widget.userId).add({
-        'text': _enteredMessage,
-        'createdAt': Timestamp.now(),
-        'username': userData['username'],
-        'myId': user.uid,
-        'userId': widget.userId
-      });
-    }
-    else{
-      final userData = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
+    final userData = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
+
+    if(user.uid[0].codeUnitAt(0) >= widget.userId[0].codeUnitAt(0))
+         FirebaseFirestore.instance.collection('chat').doc(user.uid+'-'+widget.userId)
+             .collection(user.uid+'-'+widget.userId).add({
+           'text': _enteredMessage,
+           'createdAt': Timestamp.now(),
+           'username': userData['username'],
+           'myId': user.uid,
+           'userId': widget.userId
+         });
+    else {
       FirebaseFirestore.instance.collection('chat').doc(widget.userId+'-'+user.uid)
           .collection(widget.userId+'-'+user.uid).add({
         'text': _enteredMessage,

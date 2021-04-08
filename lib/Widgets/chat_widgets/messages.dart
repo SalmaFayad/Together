@@ -6,7 +6,7 @@ import 'package:solution_challenge_project/Widgets/chat_widgets/message_bubble.d
 class Messages extends StatelessWidget{
 
   String user =  FirebaseAuth.instance.currentUser.uid;
-  String tmp;
+  String path;
   String userId;
   Messages({this.userId});
 
