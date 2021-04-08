@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class DataPageScreen extends StatefulWidget {
   /*var height;
@@ -15,61 +17,92 @@ class _DataPageScreenState extends State<DataPageScreen> {
     var appBarSize = AppBar().preferredSize.height;
     var bottomNavigationBarSize = kBottomNavigationBarHeight;
     var statusBarHeight = MediaQuery.of(context).padding.top;
-    /*print(appBarSize);
-    print(bottomNavigationBarSize);
-    print(statusBarHeight);
-    print(size.height);*/
+
+    List<String> cityList = ['Amr', 'Amr2', 'Amr3'];
+    String valueChoose = cityList[0];
     return Scaffold(
-      body: Container(
-        height: size.height -
-            appBarSize -
-            bottomNavigationBarSize -
-            statusBarHeight,
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              //  for (int i = 0; i < 20; i++)
-              Card(
-                elevation: 3,
-                margin: const EdgeInsets.all(10),
-                child: ListTile(
-                  title: Text('Ismailia, Ard Elgmayaat'),
-                  subtitle: Text('3 Persons '),
-                  trailing: Text('01200000000'),
-                ),
+      backgroundColor: Colors.grey[200],
+      body: Column(
+        children: [
+          Card(
+            elevation: 5,
+            child: Container(
+              width: double.infinity,
+              //    color: Colors.blueAccent,
+              child: Column(
+                children: [
+                  Text('Change Location'),
+                  DropdownButton(
+                      hint: Text('Select City'),
+                      value: valueChoose,
+                      onChanged: (newValue) {
+                        setState(() {
+                          valueChoose = newValue;
+                        });
+                      },
+                      items: cityList.map((valueItem) {
+                        return DropdownMenuItem(
+                          value: valueItem,
+                          child: Text(valueItem),
+                        );
+                      }).toList()),
+                ],
               ),
-              Card(
-                elevation: 3,
-                margin: const EdgeInsets.all(10),
-                child: ListTile(
-                  title: Text('Ismailia, Sheikh Zayed'),
-                  subtitle: Text('1 Person '),
-                  trailing: Text('01211111111'),
-                ),
-              ),
-              Card(
-                elevation: 3,
-                margin: const EdgeInsets.all(10),
-                child: ListTile(
-                  title: Text('Ismailia, Elkhamsa'),
-                  subtitle: Text('2 Persons '),
-                  trailing: Text('01211112112'),
-                ),
-              ),
-              Card(
-                elevation: 3,
-                margin: const EdgeInsets.all(10),
-                child: ListTile(
-                  title: Text('Ismailia, Elsalam'),
-                  subtitle: Text('5 Persons '),
-                  trailing: Text('01211133312'),
-                ),
-              ),
-            ],
+            ),
           ),
-        ),
+          Container(
+            height: size.height -
+                appBarSize -
+                bottomNavigationBarSize -
+                statusBarHeight -
+                100,
+            child: StreamBuilder(
+              stream: FirebaseFirestore.instance.collection('data').snapshots(),
+              builder: (ctx, snapshot) {
+                //final docs = snapshot.data.docs;
+                if (snapshot.connectionState == ConnectionState.waiting &&
+                    snapshot.data == null) {
+                  return CircularProgressIndicator();
+                }
+                return ListView.builder(
+                  itemCount: snapshot.data.docs.length,
+                  /* gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                      maxCrossAxisExtent: 400,
+                      childAspectRatio: 4 / 3,
+                      crossAxisSpacing: 5,
+                      mainAxisSpacing: 10),*/
+                  itemBuilder: (ctx, i) {
+                    return Padding(
+                      padding: const EdgeInsets.fromLTRB(8, 5, 8, 0),
+                      child: Card(
+                        elevation: 5,
+                        child: Container(
+                          margin: const EdgeInsets.all(15),
+                          child: Column(
+                            children: [
+                              Text('Address : ' +
+                                  snapshot.data.docs[i]['address']),
+                              Text('Phone : ' + snapshot.data.docs[i]['phone']),
+                              Text('Number of Family :' +
+                                  snapshot.data.docs[i]['numFamilyPerson']),
+                            ],
+                          ),
+                        ),
+                        /*   child: ListTile(
+                          title: Text(snapshot.data.docs[i]['address']),
+                          subtitle: Text(snapshot.data.docs[i]['phone']),
+                          trailing:
+                              Text(snapshot.data.docs[i]['numFamilyPerson']),
+                        ),*/
+                      ),
+                    );
+                  },
+                );
+              },
+            ),
+          ),
+        ],
       ),
-      backgroundColor: Colors.white,
     );
   }
 }

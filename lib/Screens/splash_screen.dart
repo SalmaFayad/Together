@@ -9,7 +9,7 @@ class SplashScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text('WELCOME TO TOGETHER', ///3c3e43 b6a57e
+            Text('WELCOME TO TOGETHER', /// logo colors 0xFF3c3e43   0xFFb6a57e
               style: TextStyle(
                 fontSize: 20.0,
                 fontWeight: FontWeight.w300,
