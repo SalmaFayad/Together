@@ -172,11 +172,11 @@ class _AuthFormState extends State<AuthForm> {
                 if (!widget._isLoading)
                   OutlineButton.icon(
                     label: Text('sign in with google',style: TextStyle(
-                      fontSize: 20.0,
+                      fontSize: 17.0,
                       fontWeight: FontWeight.bold,
                     ),),
                     shape: StadiumBorder(),
-                    padding: EdgeInsets.symmetric(horizontal: 12,vertical: 8),
+                    padding: EdgeInsets.symmetric(horizontal: 12,vertical: 10),
                     highlightedBorderColor: Color(0xFFFBC02D),
                     borderSide: BorderSide(color: Colors.grey[700],width: 1.5),
                     textColor: Colors.black,

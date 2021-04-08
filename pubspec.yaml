@@ -24,6 +24,7 @@ dependencies:
   google_sign_in: ^4.5.4
   firebase_messaging: ^9.1.0
   firebase_analytics: ^7.1.1
+  flutter_native_splash: ^1.1.7+1
 
 
 dev_dependencies:
@@ -34,10 +35,10 @@ dev_dependencies:
 flutter:
 
   uses-material-design: true
-
-
-
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/
+    - assets/resala.png
+    - assets/misr_el_kheir.png
+    - assets/elorman.png
 
