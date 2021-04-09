@@ -17,7 +17,45 @@ class _DonationUsersScreenState extends State<DonationUsersScreen> {
 
   bool isDonor = false;
 
-  Future<void> updateUserStatus() {
+
+  Future<void> updateUserStatus(BuildContext ctx) {
+    showModalBottomSheet(context: ctx,
+        builder: (_){
+          return GestureDetector(
+            onTap: (){},
+            child: SingleChildScrollView(
+              child: Card(
+                  elevation: 5,
+                  child: Container(
+                    padding: EdgeInsets.only(
+                      left: 10,
+                      right: 10,
+                      top: 10,
+                      bottom: MediaQuery.of(context).viewInsets.bottom +10,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: <Widget>[
+                     /*   TextField(
+                          decoration: InputDecoration(labelText: 'Address'),
+                          onSubmitted: (_) {},
+                        ),*/
+
+                        RaisedButton(
+                          onPressed: () {},
+                          child: Text('Submit'),
+                          textColor: Theme.of(context).textTheme.button.color,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                      ],
+                    ),
+                  )
+              ),
+            ),
+            behavior: HitTestBehavior.opaque,
+          );
+        }
+    );
     if (isDonor) {
       isDonor = false;
       return users.doc(currentUserId).update({'status': 'away'});
@@ -231,14 +269,17 @@ class _DonationUsersScreenState extends State<DonationUsersScreen> {
         ],
       ),
       backgroundColor: Colors.white,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           setState(() {
-            updateUserStatus();
+            updateUserStatus(context);
           });
         },
         child: const Icon(Icons.arrow_upward_sharp),
       ),
     );
   }
+
+
 }
