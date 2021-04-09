@@ -7,7 +7,6 @@ class FutureBuilderGetImage extends StatelessWidget {
   CollectionReference users ;
   final String currentUserId ;
 
-
   FutureBuilderGetImage(this.users, this.currentUserId);
 
   @override
@@ -19,18 +18,20 @@ class FutureBuilderGetImage extends StatelessWidget {
           if (snapshot.hasError) {
             return Text("Something went wrong");
           }
-          if (snapshot.connectionState ==
-              ConnectionState.done) {
+          if (snapshot.connectionState == ConnectionState.done) {
             Map<String, dynamic> data =
             snapshot.data.data();
             return CircleAvatar(
               backgroundImage: data['imageUrl'] == null
-                  ? null
+                  ? AssetImage('assets/user.png')
                   : NetworkImage(data['imageUrl']),
               radius: 32,
             );
           }
-          return Text("loading");
+          return const CircleAvatar(
+            backgroundImage: AssetImage('assets/user.png'),
+            radius: 32,
+          );
         });
   }
 }

@@ -86,15 +86,12 @@ class _ChatsWithUsersState extends State<ChatsWithUsers> {
             );
           },
         ):
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            CircularProgressIndicator(),
+        Container(
+          margin: EdgeInsets.all(20),
+          child:
             Center(
                 child: Text('No conversations yet'),
             ),
-          ],
         )
       ],
     );

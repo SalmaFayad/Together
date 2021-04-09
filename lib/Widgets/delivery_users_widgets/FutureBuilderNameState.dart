@@ -43,7 +43,24 @@ class FutureBuilderNameState extends StatelessWidget {
             ),
           );
         }
-        return Text("loading");
+        return Container(
+          alignment: Alignment.topLeft,
+          width: MediaQuery.of(context).size.width / 4 - 4.0,
+          child: Column(
+            crossAxisAlignment:
+            CrossAxisAlignment.start,
+            children: [
+              const Text(
+                "username:",
+                overflow: TextOverflow.ellipsis,
+              ),
+              const Text(
+                'status:',
+                overflow: TextOverflow.ellipsis,
+              ),
+            ],
+          ),
+        );;
       },
     );
   }
