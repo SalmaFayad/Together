@@ -20,10 +20,11 @@ class _MainPagesState extends State<MainPages> {
   final String currentUserId = FirebaseAuth.instance.currentUser.uid;
 
   List<Widget> _screen = [
+    ChatScreen(),
     DataPageScreen(),
     DonationUsersScreen(),
     DeliveryUserScreen(),
-    ChatScreen(),
+
   ];
 
   int _selectedIndex = 0; // to make the icon selected
@@ -42,13 +43,13 @@ class _MainPagesState extends State<MainPages> {
     return Scaffold(
       appBar: AppBar(
         title: Text(_selectedIndex == 0
-            ? 'Data'
-            : _selectedIndex == 1
-                ? 'Donors'
-                : _selectedIndex == 2
-                    ? 'Delivery' :
-        _selectedIndex == 3
             ? 'Chat'
+            : _selectedIndex == 1
+                ? 'Data'
+                : _selectedIndex == 2
+                    ? 'Donors' :
+        _selectedIndex == 3
+            ? 'Delivery'
                     : ''
         ),
       ),
@@ -59,7 +60,8 @@ class _MainPagesState extends State<MainPages> {
         onPageChanged: _onPageChanged,
         physics: NeverScrollableScrollPhysics(),
       ),
-      bottomNavigationBar: BottomNavigationBar(
+      bottomNavigationBar:
+      BottomNavigationBar(
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
         selectedItemColor: Colors.black,
@@ -68,9 +70,20 @@ class _MainPagesState extends State<MainPages> {
             icon: Padding(
               padding: EdgeInsets.only(bottom: 3),
               child: Image.asset(
-                'assets/data.png',
+                'assets/delivery.png',
                 width: 20,
                 color: _selectedIndex == 0 ? Colors.black : Color(0xFF757575),
+              ),
+            ),
+            label: 'Chat',
+          ),
+          BottomNavigationBarItem(
+            icon: Padding(
+              padding: EdgeInsets.only(bottom: 3),
+              child: Image.asset(
+                'assets/data.png',
+                width: 20,
+                color: _selectedIndex ==1 ? Colors.black : Color(0xFF757575),
               ),
             ),
             label: 'Data',
@@ -81,7 +94,7 @@ class _MainPagesState extends State<MainPages> {
               child: Image.asset(
                 'assets/donor.png',
                 width: 20,
-                color: _selectedIndex == 1 ? Colors.black : Color(0xFF757575),
+                color: _selectedIndex == 2? Colors.black : Color(0xFF757575),
               ),
             ),
             label: 'Donors',
@@ -92,22 +105,12 @@ class _MainPagesState extends State<MainPages> {
               child: Image.asset(
                 'assets/delivery.png',
                 width: 20,
-                color: _selectedIndex == 2 ? Colors.black : Color(0xFF757575),
+                color: _selectedIndex == 3 ? Colors.black : Color(0xFF757575),
               ),
             ),
             label: 'Delivery',
           ),
-          BottomNavigationBarItem(
-            icon: Padding(
-              padding: EdgeInsets.only(bottom: 3),
-              child: Image.asset(
-                'assets/delivery.png',
-                width: 20,
-                color: _selectedIndex == 3 ? Colors.black : Color(0xFF757575),
-              ),
-            ),
-            label: 'Chat',
-          ),
+
         ],
       ),
       backgroundColor: Colors.white,
