@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:solution_challenge_project/Screens/Main_Screens/chat_screen.dart';
 import 'package:solution_challenge_project/Screens/drawerScreen.dart';
-
 import 'Main_Screens/data_page_screen.dart';
 import 'Main_Screens/delivery_users_screen.dart';
 import 'Main_Screens/donation_users_screen.dart';
@@ -23,6 +23,7 @@ class _MainPagesState extends State<MainPages> {
     DataPageScreen(),
     DonationUsersScreen(),
     DeliveryUserScreen(),
+    ChatScreen(),
   ];
 
   int _selectedIndex = 0; // to make the icon selected
@@ -45,8 +46,11 @@ class _MainPagesState extends State<MainPages> {
             : _selectedIndex == 1
                 ? 'Donors'
                 : _selectedIndex == 2
-                    ? 'Delivery'
-                    : ''),
+                    ? 'Delivery' :
+        _selectedIndex == 3
+            ? 'Chat'
+                    : ''
+        ),
       ),
       body: PageView(
         // to swep between screens
@@ -92,6 +96,17 @@ class _MainPagesState extends State<MainPages> {
               ),
             ),
             label: 'Delivery',
+          ),
+          BottomNavigationBarItem(
+            icon: Padding(
+              padding: EdgeInsets.only(bottom: 3),
+              child: Image.asset(
+                'assets/delivery.png',
+                width: 20,
+                color: _selectedIndex == 3 ? Colors.black : Color(0xFF757575),
+              ),
+            ),
+            label: 'Chat',
           ),
         ],
       ),

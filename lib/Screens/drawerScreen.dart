@@ -70,14 +70,7 @@ class _drawerScreenState extends State<drawerScreen> {
           // go to profile page
         },
       ),
-      ListTile(
-        onTap: () {},
-        leading: Icon(
-          Icons.language,
-          color: Colors.black,
-        ),
-        title: Text("Change Language"),
-      ),
+
       ListTile(
         onTap: () {
           Navigator.push(
