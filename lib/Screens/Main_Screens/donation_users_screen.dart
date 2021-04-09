@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
 import 'package:flutter/material.dart';
 import 'package:solution_challenge_project/Screens/chat_screens/chat_screen.dart';
+import 'package:solution_challenge_project/Widgets/delivery_users_widgets/ExpandedTopLeftContainer.dart';
+import 'package:solution_challenge_project/Widgets/donation_user_widgets/donationInfo.dart';
 
 
 class DonationUsersScreen extends StatefulWidget {
@@ -22,36 +23,8 @@ class _DonationUsersScreenState extends State<DonationUsersScreen> {
     showModalBottomSheet(context: ctx,
         builder: (_){
           return GestureDetector(
-            onTap: (){},
-            child: SingleChildScrollView(
-              child: Card(
-                  elevation: 5,
-                  child: Container(
-                    padding: EdgeInsets.only(
-                      left: 10,
-                      right: 10,
-                      top: 10,
-                      bottom: MediaQuery.of(context).viewInsets.bottom +10,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: <Widget>[
-                     /*   TextField(
-                          decoration: InputDecoration(labelText: 'Address'),
-                          onSubmitted: (_) {},
-                        ),*/
-
-                        RaisedButton(
-                          onPressed: () {},
-                          child: Text('Submit'),
-                          textColor: Theme.of(context).textTheme.button.color,
-                          color: Theme.of(context).primaryColor,
-                        ),
-                      ],
-                    ),
-                  )
-              ),
-            ),
+              onTap: (){},
+              child: addMeal(),
             behavior: HitTestBehavior.opaque,
           );
         }
@@ -63,6 +36,40 @@ class _DonationUsersScreenState extends State<DonationUsersScreen> {
       isDonor = true;
       return users.doc(currentUserId).update({'status': 'donor'});
     }
+  }
+
+  SingleChildScrollView addMeal() {
+    return SingleChildScrollView(
+      child: Card(
+        elevation: 5,
+        child: Container(
+          padding: EdgeInsets.only( left: 10,
+            right: 10,
+            top: 10,
+            bottom: MediaQuery.of(context).viewInsets.bottom +10,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              TextField(
+                decoration: InputDecoration(
+                  labelText: 'Your meal for how many people'
+                ),
+              ),
+              RaisedButton(
+                onPressed: (){
+                  // write code here
+                  Navigator.of(context).pop();
+                },
+                child: Text('Add Your meal'),
+                textColor: Theme.of(context).textTheme.button.color,
+                color: Theme.of(context).primaryColor,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   Future<void> updateUserId() {
@@ -108,83 +115,7 @@ class _DonationUsersScreenState extends State<DonationUsersScreen> {
         children: [
           Row(
             children: [
-              Expanded(
-                flex: 1,
-                child: Container(
-                  child: Card(
-                    elevation: 5,
-                    child: Container(
-                      padding: const EdgeInsets.all(10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          FutureBuilder<DocumentSnapshot>(
-                              future: users.doc(currentUserId).get(),
-                              builder: (BuildContext context,
-                                  AsyncSnapshot<DocumentSnapshot> snapshot) {
-                                if (snapshot.hasError) {
-                                  return Text("Something went wrong");
-                                }
-                                if (snapshot.connectionState ==
-                                    ConnectionState.done) {
-                                  Map<String, dynamic> data =
-                                      snapshot.data.data();
-
-                                  return CircleAvatar(
-                                    backgroundImage: data['imageUrl'] == null
-                                        ? null
-                                        : NetworkImage(data['imageUrl']),
-                                    radius: 32,
-                                  );
-                                }
-                                return Text("loading");
-                              }),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              FutureBuilder<DocumentSnapshot>(
-                                future: users.doc(currentUserId).get(),
-                                builder: (BuildContext context,
-                                    AsyncSnapshot<DocumentSnapshot> snapshot) {
-                                  if (snapshot.hasError) {
-                                    return Text("Something went wrong");
-                                  }
-
-                                  if (snapshot.connectionState ==
-                                      ConnectionState.done) {
-                                    Map<String, dynamic> data =
-                                        snapshot.data.data();
-                                    return Container(
-                                      alignment: Alignment.topLeft,
-                                      width:
-                                          MediaQuery.of(context).size.width / 4 - 4.0,
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            "${data['username']}",
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                          Text(
-                                            'status: ${data['status']}',
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                  }
-                                  return Text("loading");
-                                },
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+              ExpandedTopLeftContainer(users,currentUserId),
               Expanded(
                 flex: 1,
                 child: Container(
@@ -217,55 +148,7 @@ class _DonationUsersScreenState extends State<DonationUsersScreen> {
               ),
             ],
           ),
-          StreamBuilder(
-            stream: FirebaseFirestore.instance
-                .collection('users')
-                .where('status', isEqualTo: 'donor')
-                .where('city', isEqualTo: valueChoose)
-                .snapshots(includeMetadataChanges: true),
-            builder: (ctx, snapShot) {
-              if (snapShot.connectionState == ConnectionState.waiting) {
-                return CircularProgressIndicator();
-              }
-              final docs = snapShot.data.docs;
-              return Expanded(
-                child: Container(
-                  child: ListView.builder(
-                    itemCount: docs.length,
-                    itemBuilder: (context, index) {
-                      return GestureDetector(
-                        onTap: () {
-                          updateUserId();
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => ChatScreen(
-                                    docs[index]['id'],
-                                    docs[index]['username'],
-                                    docs[index]['imageUrl']
-                                )
-                            ),
-                          );
-                        },
-                        child: Card(
-                            elevation: 3,
-                            child: Container(
-                              // padding: const EdgeInsets.all(20),
-                              child: ListTile(
-                                  leading: CircleAvatar(
-                                    backgroundImage:
-                                        NetworkImage(docs[index]['imageUrl']),
-                                    radius: 25.0,
-                                  ),
-                                  title: Text(docs[index]['username'])),
-                            )),
-                      );
-                    },
-                  ),
-                ),
-              );
-            },
-          ),
+          donationInfo(valueChoose, users, currentUserId),
         ],
       ),
       backgroundColor: Colors.white,
@@ -280,6 +163,9 @@ class _DonationUsersScreenState extends State<DonationUsersScreen> {
       ),
     );
   }
+
+
+
 
 
 }
