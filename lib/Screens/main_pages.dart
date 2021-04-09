@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:solution_challenge_project/Screens/Main_Screens/chat_screen.dart';
+import 'package:solution_challenge_project/Screens/Main_Screens/chats_with_users_screen.dart';
 import 'package:solution_challenge_project/Screens/drawerScreen.dart';
 import 'Main_Screens/data_page_screen.dart';
 import 'Main_Screens/delivery_users_screen.dart';
