@@ -69,11 +69,10 @@ class _MainPagesState extends State<MainPages> {
           BottomNavigationBarItem(
             icon: Padding(
               padding: EdgeInsets.only(bottom: 3),
-              child: Image.asset(
-                'assets/delivery.png',
-                width: 20,
+              child: Icon(Icons.chat_outlined,
+                size: 20.0,
                 color: _selectedIndex == 0 ? Colors.black : Color(0xFF757575),
-              ),
+              )
             ),
             label: 'Chat',
           ),

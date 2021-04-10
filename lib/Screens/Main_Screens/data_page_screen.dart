@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/rendering.dart';
 import 'package:solution_challenge_project/Widgets/data_page_widget/ListViewData.dart';
 
 class DataPageScreen extends StatefulWidget {
@@ -25,8 +26,17 @@ class _DataPageScreenState extends State<DataPageScreen> {
       backgroundColor: Colors.grey[200],
       body: Column(
         children: [
-        changeLocationCard(valueChoose, cityList),
-          ListViewData(size, appBarSize, bottomNavigationBarSize, statusBarHeight),
+        Expanded(
+            flex: 1,
+            child: Container(
+              padding: const EdgeInsets.all(8.0),
+              child: changeLocationCard(valueChoose, cityList),
+            )
+        ),
+          Expanded(
+            flex: 7,
+              child: ListViewData(size, appBarSize, bottomNavigationBarSize, statusBarHeight)
+          ),
         ],
       ),
     );
