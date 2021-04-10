@@ -34,7 +34,9 @@ class _drawerScreenState extends State<drawerScreen> {
                     if (snapshot.connectionState == ConnectionState.done) {
                       Map<String, dynamic> data = snapshot.data.data();
                       return CircleAvatar(
-                        backgroundImage: NetworkImage(data['imageUrl']),
+                        backgroundImage:data['imageUrl']!=null?
+                        NetworkImage(data['imageUrl'])
+                            :AssetImage('assets/user.png'),
                         radius: 50.0,
                         backgroundColor: Colors.purple, // must be Image
                       );

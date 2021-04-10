@@ -55,8 +55,9 @@ class donationInfo extends StatelessWidget {
                         // padding: const EdgeInsets.all(20),
                         child: ListTile(
                             leading: CircleAvatar(
-                              backgroundImage:
-                              NetworkImage(docs[index]['imageUrl']),
+                              backgroundImage:docs[index]['imageUrl']!=null?
+                            NetworkImage(docs[index]['imageUrl'])
+                                :AssetImage('assets/user.png'),
                               radius: 25.0,
                             ),
                             title: Text(docs[index]['username'])),
