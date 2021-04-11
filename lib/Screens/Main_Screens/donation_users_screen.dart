@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:solution_challenge_project/Screens/chat_screens/chat_screen.dart';
 import 'package:solution_challenge_project/Widgets/delivery_users_widgets/ExpandedTopLeftContainer.dart';
 import 'package:solution_challenge_project/Widgets/donation_user_widgets/donationInfo.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 
 class DonationUsersScreen extends StatefulWidget {
@@ -20,7 +22,7 @@ class _DonationUsersScreenState extends State<DonationUsersScreen> {
 
 
   Future<void> updateUserStatus(BuildContext ctx) {
-    showModalBottomSheet(context: ctx,
+   /* showModalBottomSheet(context: ctx,
         builder: (_){
           return GestureDetector(
               onTap: (){},
@@ -28,7 +30,7 @@ class _DonationUsersScreenState extends State<DonationUsersScreen> {
             behavior: HitTestBehavior.opaque,
           );
         }
-    );
+    );*/
     if (isDonor) {
       isDonor = false;
       return users.doc(currentUserId).update({'status': 'away'});
@@ -38,7 +40,7 @@ class _DonationUsersScreenState extends State<DonationUsersScreen> {
     }
   }
 
-  SingleChildScrollView addMeal() {
+ /* SingleChildScrollView addMeal() {
     return SingleChildScrollView(
       child: Card(
         elevation: 5,
@@ -70,7 +72,7 @@ class _DonationUsersScreenState extends State<DonationUsersScreen> {
         ),
       ),
     );
-  }
+  }*/
 
   Future<void> updateUserId() {
     return users.doc(currentUserId).update({'id': currentUserId});
@@ -87,7 +89,6 @@ class _DonationUsersScreenState extends State<DonationUsersScreen> {
     'Gharbia',
     'Luxor',
     'Dakahlia',
-    'Gharbia',
     'Asyut',
     'Ismailia',
     'Faiyum',
@@ -126,9 +127,18 @@ class _DonationUsersScreenState extends State<DonationUsersScreen> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            Text('Change Location'),
+                            Text('Change Location',style: GoogleFonts.oswald(
+                              fontSize: 15,
+
+                              color: Colors.grey[700],
+
+                            ),),
                             DropdownButton(
-                                hint: Text('Select City'),
+                                hint: Text('Select City',style: GoogleFonts.oswald(
+                                  fontSize: 15,
+                                  // fontWeight: FontWeight.bold,
+                                  color: Colors.grey[700],
+                                ),),
                                 value: valueChoose,
                                 onChanged: (newValue) {
                                   setState(() {

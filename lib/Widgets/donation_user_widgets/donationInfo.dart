@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:solution_challenge_project/Screens/chat_screens/chat_screen.dart';
 import 'package:solution_challenge_project/Widgets/delivery_users_widgets/FutureBuilderNameState.dart';
 import 'package:solution_challenge_project/Widgets/delivery_users_widgets/FutureBuilderGetImage.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class donationInfo extends StatelessWidget {
   String valueChoose ;
@@ -42,7 +43,7 @@ class donationInfo extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                           builder: (context) => ChatScreen(
-                              docs[index]['id'],
+                              docs[index]['id'] ,
                               docs[index]['username'],
                               docs[index]['imageUrl']
                           )
@@ -60,7 +61,13 @@ class donationInfo extends StatelessWidget {
                                 :AssetImage('assets/user.png'),
                               radius: 25.0,
                             ),
-                            title: Text(docs[index]['username'])),
+                            title: Text(docs[index]['username'],style: GoogleFonts.oswald(
+                              fontSize: 17,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.grey[700],
+
+                            ),
+                            ) ),
                       )),
                 );
               },

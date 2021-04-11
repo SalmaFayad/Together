@@ -6,6 +6,7 @@ import 'package:solution_challenge_project/Screens/drawerScreen.dart';
 import 'Main_Screens/data_page_screen.dart';
 import 'Main_Screens/delivery_users_screen.dart';
 import 'Main_Screens/donation_users_screen.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class MainPages extends StatefulWidget {
   @override
@@ -51,6 +52,11 @@ class _MainPagesState extends State<MainPages> {
         _selectedIndex == 3
             ? 'Delivery'
                     : ''
+          ,style: GoogleFonts.oswald(
+          fontSize: 21,
+          fontWeight: FontWeight.bold,
+          color: Colors.black,
+        ),
         ),
       ),
       body: PageView(
@@ -64,14 +70,14 @@ class _MainPagesState extends State<MainPages> {
       BottomNavigationBar(
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
-        selectedItemColor: Colors.black,
+        selectedItemColor: Color(0xFFFBC02D),
         items: [
           BottomNavigationBarItem(
             icon: Padding(
               padding: EdgeInsets.only(bottom: 3),
               child: Icon(Icons.chat_outlined,
                 size: 20.0,
-                color: _selectedIndex == 0 ? Colors.black : Color(0xFF757575),
+                color: _selectedIndex == 0 ?  Color(0xFFFBC02D) : Colors.black,
               )
             ),
             label: 'Chat',
@@ -82,7 +88,7 @@ class _MainPagesState extends State<MainPages> {
               child: Image.asset(
                 'assets/data.png',
                 width: 20,
-                color: _selectedIndex ==1 ? Colors.black : Color(0xFF757575),
+                color: _selectedIndex ==1 ?  Color(0xFFFBC02D) : Colors.black,
               ),
             ),
             label: 'Data',
@@ -93,7 +99,7 @@ class _MainPagesState extends State<MainPages> {
               child: Image.asset(
                 'assets/donor.png',
                 width: 20,
-                color: _selectedIndex == 2? Colors.black : Color(0xFF757575),
+                color: _selectedIndex == 2? Color(0xFFFBC02D) : Colors.black,
               ),
             ),
             label: 'Donors',
@@ -104,7 +110,7 @@ class _MainPagesState extends State<MainPages> {
               child: Image.asset(
                 'assets/delivery.png',
                 width: 20,
-                color: _selectedIndex == 3 ? Colors.black : Color(0xFF757575),
+                color: _selectedIndex == 3 ? Color(0xFFFBC02D) : Colors.black,
               ),
             ),
             label: 'Delivery',

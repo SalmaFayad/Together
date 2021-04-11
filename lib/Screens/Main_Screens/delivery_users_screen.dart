@@ -6,6 +6,7 @@ import 'package:solution_challenge_project/Widgets/delivery_users_widgets/Expand
 import 'package:solution_challenge_project/Widgets/delivery_users_widgets/FutureBuilderNameState.dart';
 import 'package:solution_challenge_project/Widgets/delivery_users_widgets/FutureBuilderGetImage.dart';
 import 'package:solution_challenge_project/Widgets/delivery_users_widgets/deliveryInfo.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class DeliveryUserScreen extends StatefulWidget {
   @override
@@ -42,7 +43,6 @@ class _DeliveryUserScreenState extends State<DeliveryUserScreen> {
     'Gharbia',
     'Luxor',
     'Dakahlia',
-    'Gharbia',
     'Asyut',
     'Ismailia',
     'Faiyum',
@@ -81,9 +81,18 @@ class _DeliveryUserScreenState extends State<DeliveryUserScreen> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            Text('Change Location'),
+                            Text('Change Location',style: GoogleFonts.oswald(
+                              fontSize: 15,
+
+                              color: Colors.grey[700],
+
+                            ),),
                             DropdownButton(
-                                hint: Text('Select City'),
+                                hint: Text('Select City',style: GoogleFonts.oswald(
+                                  fontSize: 15,
+                                  // fontWeight: FontWeight.bold,
+                                  color: Colors.grey[700],
+                                ),),
                                 value: valueChoose,
                                 onChanged: (newValue) {
                                   setState(() {
@@ -107,6 +116,7 @@ class _DeliveryUserScreenState extends State<DeliveryUserScreen> {
         ],
       ),
       backgroundColor: Colors.white,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           setState(() {

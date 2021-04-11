@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ListViewData extends StatelessWidget {
   Size size; double appBarSize, bottomNavigationBarSize, statusBarHeight;
 
   ListViewData(this.size, this.appBarSize, this.bottomNavigationBarSize,
       this.statusBarHeight);
+
 
   @override
   Widget build(BuildContext context) {
@@ -39,12 +41,28 @@ class ListViewData extends StatelessWidget {
                   child: Container(
                     margin: const EdgeInsets.all(15),
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text('Address : ' +
-                            snapshot.data.docs[i]['address']),
-                        Text('Phone : ' + snapshot.data.docs[i]['phone']),
-                        Text('Number of Family :' +
-                            snapshot.data.docs[i]['numFamilyPerson']),
+                            snapshot.data.docs[i]['address'],style: GoogleFonts.oswald(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.grey[700],
+
+                        ),),
+                        Text('Phone : ' + snapshot.data.docs[i]['phone'],style: GoogleFonts.oswald(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.grey[700],
+
+                        ),),
+                        Text('Number of Family : ' +
+                            snapshot.data.docs[i]['numFamilyPerson'],style: GoogleFonts.oswald(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                            //color: Color(0xFFb6a57e),
+                          color: Colors.grey[700],
+                        ),),
                       ],
                     ),
                   ),

@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:solution_challenge_project/Screens/chat_screens/chat_screen.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class FutureBuilderNameState extends StatelessWidget {
   CollectionReference users ;
@@ -34,9 +35,20 @@ class FutureBuilderNameState extends StatelessWidget {
                 Text(
                   "${data['username']}",
                   overflow: TextOverflow.ellipsis,
+                   style: GoogleFonts.oswald(
+                   fontSize: 15,
+                   fontWeight: FontWeight.bold,
+                   color: Colors.grey[800],
+
+            ),
                 ),
                 Text(
-                  'status: ${data['status']}',
+                  'status: ${data['status']}', style: GoogleFonts.oswald(
+                  fontSize: 15,
+                //  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+
+                ),
                   overflow: TextOverflow.ellipsis,
                 ),
               ],
