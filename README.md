@@ -3,7 +3,8 @@
 
 
 Together it is a platform to help people inneed of food and to create an environment for communication between people and sharing meals with Poor people 
-Our solution is to deliver food to people in need of food by delivery donors, where the delivery donor communicates and compacts with the food donor then takes the food to Poor people under the supervision of charities that are responsible for information about people in need of food. Our goal is to encourage people to help the poor, and create challenges among them to encourage them to continue to donate and deliver.
+Our solution is to deliver food to people in need of food by delivery donors, where the delivery donor communicates and compacts with the food donor then takes the food to Poor people under the supervision of charities that are responsible for information about people in need of food.<br />
+Our goal is to encourage people to help the poor, and create challenges among them to encourage them to continue to donate and deliver.
 
 ## PROJECT SUMMARY
 Because of hunger around the world, because there are many people who do not have a source of food, we thought about a solution to feed these people because they deserve a better life, so we are working on a goal "No Hunger".<br />
@@ -16,7 +17,7 @@ Second one (together app)<br />
 The main app that will used by tow kind of users (donor) people <br />
 and (delivery) people <br />
 User will enter the app and will found a very simple form for create his/her (together) account for the first time or login the app..<br />
-Then user will find 3 main screens <br />
+Then user will find 4 main screens <br />
 First one is (Data) screen that is contain all required information about people in need of food such as number of family members, their place and their phone number, which has been already entered by the special user (charities) . <br />
 Second one is (Donors) who will donate the lunch that is enough to feed any poor family in the data screen ..<br />
 Third one is(delivery) who will donate by deliver the lunch from donors to needy people.<br />
