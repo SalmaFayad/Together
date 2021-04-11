@@ -35,7 +35,7 @@ class FutureBuilderNameState extends StatelessWidget {
                 Text(
                   "${data['username']}",
                   overflow: TextOverflow.ellipsis,
-                   style: GoogleFonts.oswald(
+                   style: GoogleFonts.lato(
                    fontSize: 15,
                    fontWeight: FontWeight.bold,
                    color: Colors.grey[800],
@@ -43,7 +43,7 @@ class FutureBuilderNameState extends StatelessWidget {
             ),
                 ),
                 Text(
-                  'status: ${data['status']}', style: GoogleFonts.oswald(
+                  'status: ${data['status']}', style: GoogleFonts.lato(
                   fontSize: 15,
                 //  fontWeight: FontWeight.bold,
                   color: Colors.black,

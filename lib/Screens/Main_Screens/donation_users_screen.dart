@@ -127,14 +127,14 @@ class _DonationUsersScreenState extends State<DonationUsersScreen> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            Text('Change Location',style: GoogleFonts.oswald(
+                            Text('Change Location',style: GoogleFonts.lato(
                               fontSize: 15,
 
                               color: Colors.grey[700],
 
                             ),),
                             DropdownButton(
-                                hint: Text('Select City',style: GoogleFonts.oswald(
+                                hint: Text('Select City',style: GoogleFonts.lato(
                                   fontSize: 15,
                                   // fontWeight: FontWeight.bold,
                                   color: Colors.grey[700],

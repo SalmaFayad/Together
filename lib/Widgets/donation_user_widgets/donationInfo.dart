@@ -61,7 +61,7 @@ class donationInfo extends StatelessWidget {
                                 :AssetImage('assets/user.png'),
                               radius: 25.0,
                             ),
-                            title: Text(docs[index]['username'],style: GoogleFonts.oswald(
+                            title: Text(docs[index]['username'],style: GoogleFonts.lato(
                               fontSize: 17,
                               fontWeight: FontWeight.bold,
                               color: Colors.grey[700],

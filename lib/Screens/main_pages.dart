@@ -52,7 +52,8 @@ class _MainPagesState extends State<MainPages> {
         _selectedIndex == 3
             ? 'Delivery'
                     : ''
-          ,style: GoogleFonts.oswald(
+          ,style: GoogleFonts.lato(
+
           fontSize: 21,
           fontWeight: FontWeight.bold,
           color: Colors.black,

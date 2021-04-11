@@ -32,6 +32,7 @@ class _DataPageScreenState extends State<DataPageScreen> {
 
   String valueChoose;
   List<String> cityList = [
+    'Ismailia',
     'Cairo',
     'Alexandria',
     'Giza',
@@ -41,7 +42,7 @@ class _DataPageScreenState extends State<DataPageScreen> {
     'Luxor',
     'Dakahlia',
     'Asyut',
-    'Ismailia',
+
     'Faiyum',
     'Sharqia',
     'Damietta',
@@ -80,7 +81,7 @@ class _DataPageScreenState extends State<DataPageScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      Text('Change Location',style: GoogleFonts.oswald(
+                      Text('Change Location',style: GoogleFonts.lato(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                         color: Colors.grey[700],
@@ -118,11 +119,6 @@ class _DataPageScreenState extends State<DataPageScreen> {
         ],
       ),
     );
-  }
-
-  Card changeLocationCard(String valueChoose, List<String> cityList) {
-
-
   }
 
  
