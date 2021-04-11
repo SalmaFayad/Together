@@ -31,6 +31,7 @@ class _AuthScreenState extends State<AuthScreen> {
           email: user.email,
           password: password,
         );
+        await authResult.user.sendEmailVerification();
         user.id = authResult.user.uid;
 
         // user.imageUrl =

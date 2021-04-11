@@ -43,6 +43,7 @@ class _AuthFormState extends State<AuthForm> {
         return;
       }
       user.status = 'away';
+      user.imageUrl = 'https://firebasestorage.googleapis.com/v0/b/solution-challenge-b89fb.appspot.com/o/user_image%2Fuser.png?alt=media&token=9e0e8709-9dfa-4b0b-a3af-2c7c7eb633a9';
       widget.submitFn(user, _password.trim(), _isLogin, context);
     }
   }
