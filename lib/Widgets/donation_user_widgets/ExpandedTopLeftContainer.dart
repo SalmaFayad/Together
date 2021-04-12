@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:solution_challenge_project/Screens/chat_screens/chat_screen.dart';
 import 'package:solution_challenge_project/Widgets/delivery_users_widgets/FutureBuilderNameState.dart';
 import 'package:solution_challenge_project/Widgets/delivery_users_widgets/FutureBuilderGetImage.dart';
@@ -70,10 +71,16 @@ class ExpandedTopLeftContainer extends StatelessWidget {
                               children: [
                                 Text(
                                   "${data['username']}",
-                                  overflow: TextOverflow.ellipsis,
+                                  overflow: TextOverflow.clip,
+                                  style: GoogleFonts.lato(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.grey[800],
+
+                                  ),
                                 ),
                                 Text(
-                                  'status: ${data['status']}',
+                                  '${data['status']}',
                                   overflow: TextOverflow.ellipsis,
                                 ),
                               ],
